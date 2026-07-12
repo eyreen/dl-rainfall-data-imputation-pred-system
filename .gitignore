@@ -1,0 +1,6 @@
+.venv/
+.venv_tf/
+.claude/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
