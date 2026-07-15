@@ -325,7 +325,7 @@ The flat horizon profile (all days ≈ 248%) indicates the model learned to pred
 
 ---
 
-## 8. Full Model Comparison
+## 8. Full Model Comparison (All Variants)
 
 ### 8.1 R²% Summary — All Models
 
@@ -335,9 +335,17 @@ The flat horizon profile (all days ≈ 248%) indicates the model learned to pred
 | Old PyTorch TCN | Weekly | +1.31% | baseline |
 | Old PyTorch TCN | Monthly | +15.24% | baseline |
 | TF Basic TCN (14-day multi-step) | Daily (avg) | -10.04% | −17.6pp |
-| **TF Multi-Head TCN (ensemble ×3)** | **Daily** | **-3.22%** | **−10.8pp** |
-| **TF Multi-Head TCN (ensemble ×3)** | **Weekly** | **+2.72%** | **+1.4pp ✓ BEAT** |
-| **TF Multi-Head TCN (ensemble ×3)** | **Monthly** | **+23.75%** | **+8.5pp ✓ BEAT** |
+| TF Multi-Head TCN (ensemble ×3) | Daily | -3.22% | −10.8pp |
+| TF Multi-Head TCN (ensemble ×3) | Weekly | +2.72% | +1.4pp |
+| **TF Multi-Head TCN (ensemble ×3)** | **Monthly** | **+23.75%** | **+8.5pp ✓** |
+| Hurdle TCN + Wtd. Loss (no ERA5) | Daily | +2.84% | −4.7pp |
+| Hurdle TCN + Wtd. Loss (no ERA5) | Weekly | +4.51% | +3.2pp |
+| Hurdle TCN + Wtd. Loss (no ERA5) | Monthly | +21.14% | +5.9pp |
+| ERA5 + Hurdle TCN | Daily | +5.81% | −1.7pp |
+| **ERA5 + Hurdle TCN** | **Weekly** | **+7.52%** | **+6.2pp ✓ BEST** |
+| ERA5 + Hurdle TCN | Monthly | +21.45% | +6.2pp |
+
+**Best per scale:** Daily → PyTorch (+7.53%) · Weekly → ERA5+Hurdle (+7.52%) · Monthly → TF Multi-Head (+23.75%)
 
 The multi-head model **beats the old PyTorch baseline on weekly and monthly scales** and reduces the daily R² gap from −17.6pp to −10.8pp compared to the basic TF TCN.
 
@@ -357,9 +365,124 @@ The multi-head model **beats the old PyTorch baseline on weekly and monthly scal
 
 ---
 
-## 9. Interpretation
+---
 
-### 9.1 Why Daily R²% Remains Negative
+## 9. Enhancement Steps 3–4: Hurdle Model + Extreme-Event Weighted Loss
+
+### 9.1 Motivation
+
+Two structural weaknesses in the base multi-head model:
+1. **Zero-inflation (~47.5% dry days)** — MSE loss treats dry-day predictions and wet-day errors equally, so the model minimises loss by biasing toward near-zero
+2. **Heavy-rainfall underweighting** — extreme events (>80 mm/day) dominate real-world impact but are underrepresented in the training distribution
+
+### 9.2 Hurdle Architecture (4-head)
+
+A fourth output head — a binary wet/dry classifier — was added on top of the shared TCN backbone:
+
+```
+Shared context vector (Dense 256 → 128)
+  ├─ Dense(3, sigmoid, name="wetdry")   → wet probability per station
+  ├─ Dense(3,           name="daily")   → raw daily regression
+  ├─ Dense(3, sigmoid,  name="weekly")  → weekly aggregate
+  └─ Dense(3, sigmoid,  name="monthly") → monthly aggregate
+```
+
+At inference, the daily prediction is gated by the wet/dry classifier:
+
+```python
+pd_hurdle = pd_raw * (wet_prob > 0.4).astype("float32")
+```
+
+This directly suppresses false-positive rainfall predictions on days the model classifies as dry, addressing the zero-inflation bias.
+
+### 9.3 Extreme-Event Weighted Loss
+
+```python
+def weighted_mse(y_true, y_pred):
+    w = 1.0 + 3.0 * tf.square(y_true)
+    return tf.reduce_mean(w * tf.square(y_true - y_pred))
+```
+
+Weight `w` grows quadratically with true rainfall magnitude — a 50 mm/day event receives weight 7501× vs 1× for a dry day. Applied to the daily head only; weekly and monthly heads use standard MSE.
+
+### 9.4 Results (Hurdle, no ERA5)
+
+| Scale | Overall R²% | vs. Multi-Head (no hurdle) |
+|---|---|---|
+| Daily | +2.84% | +6.1pp |
+| Weekly | +4.51% | +1.8pp |
+| Monthly | +21.14% | −2.6pp |
+| Wet/dry accuracy | 64.2% | — |
+
+Daily R² flipped from negative (−3.22%) to positive (+2.84%) — the hurdle gating directly eliminates false-positive rain predictions.
+
+---
+
+## 10. Enhancement Step 5: ERA5 Atmospheric Reanalysis Integration
+
+### 10.1 Data Source
+
+ERA5 global atmospheric reanalysis from ECMWF Copernicus CDS, downloaded for the Pahang bounding box (3–5.5°N, 101–103.5°E), 2009–2025 (17 years). Variables requested at 6-hourly resolution.
+
+| ERA5 Variable | Unit | Aggregation |
+|---|---|---|
+| 2m air temperature (`t2m`) | K → °C | Daily mean |
+| 2m dewpoint temperature (`d2m`) | K → °C | Daily mean |
+| Surface pressure (`sp`) | Pa → hPa | Daily mean |
+| 10m u-wind component (`u10`) | m/s | Daily mean |
+| 10m v-wind component (`v10`) | m/s | Daily mean |
+| Total column water vapour (`tcwv`) | kg/m² | Daily mean |
+| Total precipitation (`tp`) | m → mm | Daily sum |
+| Relative humidity (`era5_rh`) | % | Derived (Magnus formula) |
+| Wind speed (`era5_ws`) | m/s | Derived (√(u²+v²)) |
+
+**Note:** ERA5 files are delivered as ZIP archives containing two inner NetCDF files (`stepType=instant` for state variables, `stepType=accum` for precipitation). Parsing uses `zipfile` + `netCDF4` in-memory loading.
+
+### 10.2 Preprocessing
+
+All 17 ERA5 ZIP files extracted successfully (6,209 daily records, 0 NaN after merge). ERA5 features normalised separately with their own `MinMaxScaler([0,1])` fitted on training data.
+
+**Total features after ERA5 integration: 22**
+- 9 rainfall + rolling means (log-normalised)
+- 4 seasonal sin/cos encodings
+- 9 ERA5 atmospheric variables (including 2 derived)
+
+### 10.3 Results (ERA5 + Hurdle TCN)
+
+| Scale | Station | NRMSE% | NMAE% | R²% |
+|---|---|---|---|---|
+| Daily | Nada | 230.7% | 95.2% | +6.86% |
+| Daily | Lembing | 214.7% | 95.2% | +5.08% |
+| Daily | Reman | 237.5% | 95.4% | +5.41% |
+| **Daily** | **Overall** | **227.3%** | — | **+5.81%** |
+| Weekly | Nada | 115.1% | 76.9% | +6.58% |
+| Weekly | Lembing | 109.2% | 71.7% | +4.69% |
+| Weekly | Reman | 113.4% | 75.7% | +10.36% |
+| **Weekly** | **Overall** | **112.5%** | — | **+7.52%** |
+| Monthly | Nada | 70.4% | 54.3% | +17.88% |
+| Monthly | Lembing | 62.8% | 45.8% | +22.56% |
+| Monthly | Reman | 71.5% | 54.0% | +21.25% |
+| **Monthly** | **Overall** | **68.0%** | — | **+21.45%** |
+
+**Wet/dry accuracy: 65.6%** (vs. 64.2% without ERA5)
+
+Training: 3 seeds × ~22 min = **67.7 min total** (300 epochs max, patience=50)
+
+### 10.4 Impact of ERA5
+
+| Scale | Hurdle (no ERA5) | ERA5 + Hurdle | Gain |
+|---|---|---|---|
+| Daily | +2.84% | +5.81% | +2.97pp |
+| Weekly | +4.51% | +7.52% | +3.01pp |
+| Monthly | +21.14% | +21.45% | +0.31pp |
+
+ERA5 variables contributed the most to daily and weekly prediction — atmospheric state (humidity, pressure, wind) is most predictive at short horizons. Monthly gains are marginal because 30-day totals are already captured by the seasonal embeddings.
+
+---
+
+## 11. Interpretation
+
+### 11.1 Why Daily R²% Remains Low
 
 Daily point rainfall prediction without atmospheric covariates is structurally difficult:
 
@@ -369,11 +492,11 @@ Daily point rainfall prediction without atmospheric covariates is structurally d
 
 At weekly and monthly scales these effects average out: zero-inflation matters less (dry weeks are expected), and the climatological signal (Pahang northeast monsoon Oct–Mar) becomes detectable from rolling means and seasonal embeddings.
 
-### 9.2 What the Monthly R²% = +23.75% Means
+### 11.2 What the Monthly R²% = +23.75% Means
 
 NRMSE = 67.1% on 30-day cumulative rainfall is a strong result for rainfall-only inputs. Monthly totals are the primary input to water resource planning, reservoir management, and flood-season preparation. The model explains ~24% of the variance in monthly rainfall totals from the past 90-day record and calendar features alone — without any atmospheric data.
 
-### 9.3 Realistic Performance Ceiling
+### 11.3 Realistic Performance Ceiling
 
 | Input available | Realistic daily R²% ceiling |
 |---|---|
@@ -386,7 +509,7 @@ The multi-head TCN sits at the **upper end of what is achievable with rainfall-o
 
 ---
 
-## 10. Path to Further Improvement
+## 12. Path to Further Improvement
 
 | Improvement | Expected gain | Difficulty |
 |---|---|---|
@@ -398,7 +521,7 @@ The multi-head TCN sits at the **upper end of what is achievable with rainfall-o
 
 ---
 
-## 11. Output Artifacts
+## 13. Output Artifacts
 
 | Artifact | Description |
 |---|---|
@@ -407,12 +530,19 @@ The multi-head TCN sits at the **upper end of what is achievable with rainfall-o
 | `tcn_mh_scatter_weekly.png` | Actual vs predicted scatter — 7-day cumulative (3 stations) |
 | `tcn_mh_scatter_monthly.png` | Actual vs predicted scatter — 30-day cumulative (3 stations) |
 | `tcn_r2_comparison.png` | R²% bar chart — all 4 model variants side by side |
-| `03b_tcn_multihead_tensorflow.ipynb` | Full documented notebook — multi-head enhanced model |
+| `03b_tcn_multihead_tensorflow.ipynb` | Full documented notebook — multi-head, hurdle, ERA5 |
 | `03_tcn_prediction_tensorflow.ipynb` | Basic TCN notebook — 14-day horizon |
+| `hurdle_tcn_predictions.csv` | 893 rows — hurdle model (no ERA5) test predictions |
+| `era5_hurdle_predictions.csv` | 893 rows — ERA5+hurdle model test predictions |
+| `era5_pahang_daily.csv` | 6,209 rows — ERA5 daily aggregates (2009–2025) |
+| `figures/tcn/era5_scatter_daily.png` | Daily scatter — ERA5+Hurdle (3 stations) |
+| `figures/tcn/era5_scatter_monthly.png` | Monthly scatter — ERA5+Hurdle (3 stations) |
+| `figures/tcn/shap_feature_importance.png` | SHAP feature importance bar chart |
+| `figures/tcn/shap_temporal_importance.png` | Spearman lag-correlation temporal importance |
 
 ---
 
-## 12. References
+## 14. References
 
 - Bai, S., Kolter, J. Z., & Koltun, V. (2018). An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling. *arXiv:1803.01271*.
 - Abadi, M. et al. (2015). TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems. *tensorflow.org*.

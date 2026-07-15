@@ -16,7 +16,7 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 |---|---|---|---|
 | 1 — Data Engineering | `01_e2e_data_engineering.ipynb` | EDA, gap detection, feature engineering | Clean dataset, gap map |
 | 2 — GAN Imputation | `02b_gan_cnn_tensorflow.ipynb` | GAIN (GAN) with CNN generator, 5-seed ensemble | R²=+0.179, mean bias <2% |
-| 3 — TCN Prediction | `03b_tcn_multihead_tensorflow.ipynb` | Multi-head TCN, 3-seed ensemble | Monthly R²=+0.238 |
+| 3 — TCN Prediction | `03b_tcn_multihead_tensorflow.ipynb` | Multi-head Hurdle TCN + ERA5, 3-seed ensemble | Weekly R²=+0.075 (best) |
 
 ## Architecture
 
@@ -25,10 +25,12 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 - 5-model ensemble (seeds 42, 123, 456, 789, 1024)
 - Temporal window: 15 days
 
-### Multi-Head TCN Prediction (Phase 3)
+### Multi-Head Hurdle TCN + ERA5 (Phase 3)
 - 5 TCN blocks, 96 filters, dilations [1, 2, 4, 8, 16], causal padding
-- 13 input features: rainfall + 7/30-day rolling means + sin/cos seasonal encoding
-- Three separate output heads: daily (next 1d), weekly (7d sum), monthly (30d sum)
+- 22 input features: rainfall + rolling means + seasonal encoding + 9 ERA5 atmospheric vars
+- Four output heads: wet/dry classifier (BCE) + daily regression + weekly + monthly
+- Hurdle gating: daily prediction zeroed when wet_prob < 0.4
+- Extreme-event weighted loss: w = 1 + 3·y² on daily head
 - 3-seed ensemble [42, 123, 456]
 
 ## Results
@@ -40,12 +42,14 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 | CNN finetuned | +0.152 | 202.4% |
 | **CNN ensemble ×5** | **+0.179** | **199.2%** |
 
-### TCN Prediction (test set)
-| Scale | R² | NRMSE |
-|---|---|---|
-| Daily (next 1d) | -0.032 | 239.0% |
-| Weekly (7d sum) | +0.027 | 115.3% |
-| **Monthly (30d sum)** | **+0.238** | **67.1%** |
+### TCN Prediction — All Variants (test set, overall R²)
+
+| Model | Daily R² | Weekly R² | Monthly R² |
+|---|---|---|---|
+| Old PyTorch TCN | +0.075 | +0.013 | +0.152 |
+| TF Multi-Head (no ERA5) | -0.032 | +0.027 | **+0.238** |
+| Hurdle + Wtd. Loss (no ERA5) | +0.028 | +0.045 | +0.211 |
+| **ERA5 + Hurdle TCN** | +0.058 | **+0.075** | +0.215 |
 
 ## Project Structure
 
