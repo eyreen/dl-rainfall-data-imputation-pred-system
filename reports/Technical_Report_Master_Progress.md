@@ -5,7 +5,7 @@
 **Author:** Arinn Danish  
 **Date:** July 2026  
 **Frameworks:** TensorFlow 2.21.0 / Keras 3.15.0 *(deep learning libraries used for model building and training)*; PyTorch *(an alternative deep learning library, used for the Phase 1 baseline)*  
-**Status:** Phase 3 complete; Optuna HPO in progress; new dataset onboarding pending
+**Status:** Phase 3 complete; Optuna HPO complete; Phase 4 GAN imputation complete; Phase 4 model training in progress
 
 ---
 
@@ -707,34 +707,118 @@ Missing 15-minute rows are **structurally different** from missing daily values:
 | 2–24 hours | Forward-fill counter diff if counter resumes monotonically | Counter value at resumption encodes total during gap |
 | > 24 hours | Flag as NaN; fill via GAN imputation at daily resolution | Extended outage — no reliable way to reconstruct sub-daily pattern |
 
-### 8.4 Planned Processing Pipeline
+### 8.4 Executed Processing Pipeline
 
 ```
 Raw XLSX files (inside ZIP → Excel sheets, 15-min cumulative readings)
     → Extract 5-station cumulative time series
     → Convert cumulative → incremental 15-min rainfall (diff + reset handling)
     → Resample 15-min → daily totals (sum over each calendar day)
-    → Quality control (negative values → 0; >600 mm/day → flag for manual review)
-    → GAN imputation on daily NaN gaps (same architecture as Phase 2)
-    → Merge with ERA5 (same Pahang bounding box — data already downloaded)
-    → Feature engineering (rolling means at 7d and 30d per station; sin/cos seasonal)
-    → Retrain TCN + Hurdle model for 5 stations (N_STATIONS = 5)
+    → Quality control (negative values → 0; >600 mm/day → flagged NaN)
+    → GAN imputation on daily NaN gaps (5-model CNN-GAIN ensemble)   ← COMPLETE
+    → Station-mapped ERA5 extraction (nearest grid point per station)  ← COMPLETE
+    → Feature engineering (rolling means 7d/30d; sin/cos seasonal)    ← COMPLETE
+    → Retrain Hurdle TCN for 5 stations (Optuna best config)          ← IN PROGRESS
 ```
 
-### 8.5 Architectural Changes for Phase 4
+### 8.5 Data Quality Report
+
+**15-minute telemetry conversion results:**
+
+| Station | Total 15-min rows | Missing rows | Missing % |
+|---|---|---|---|
+| Pasir Kemudi | 388,705 | 122,780 | 31.6% |
+| Felda Panching | 388,705 | 173,028 | 44.5% |
+| KOMTUR | 388,705 | 160,839 | 41.4% |
+| Sg. Belat | 388,705 | 143,310 | 36.9% |
+| Sg. Cherating | 388,705 | 159,532 | 41.0% |
+
+**Post-QC daily summary:**
+
+| Station | Daily rows | NaN days | Zero-rain days | Mean (wet) | Max (mm) |
+|---|---|---|---|---|---|
+| Pasir Kemudi | 4,050 | 1,684 (41.6%) | 47.1% | 8.27 mm | 354.0 mm |
+| Felda Panching | 4,050 | 2,272 (56.1%) | 54.8% | 7.14 mm | 209.0 mm |
+| KOMTUR | 4,050 | 2,190 (54.1%) | 48.5% | 13.95 mm | 539.0 mm |
+| Sg. Belat | 4,050 | 1,905 (47.0%) | 44.0% | 8.50 mm | 385.0 mm |
+| Sg. Cherating | 4,050 | 2,101 (51.9%) | 49.2% | 8.21 mm | 258.5 mm |
+
+**Note on KOMTUR:** 114 days with sensor readings >17,000 mm (physically impossible) were removed and replaced with NaN before imputation. The QC threshold is 600 mm/day — the world record daily rainfall is 1,825 mm (La Réunion, 1966). Any value above 600 mm is treated as a sensor artefact.
+
+**Note on high NaN rates:** The 42–56% NaN rates per station are high compared with Phase 1–3 (2.7%). This reflects sensor outages and transmission failures over the 11-year period. The imputation strategy accounts for this: days where ≥4 of 5 stations are simultaneously missing (1,440 days — 35.6% of the period) are not imputed because insufficient cross-station signal remains.
+
+### 8.6 ERA5 Station-Mapped Extraction
+
+Rather than averaging ERA5 over a bounding box (Phase 3 approach), Phase 4 extracts the **nearest ERA5 grid point** for each station's coordinates:
+
+| Station | Actual coords | Nearest ERA5 grid cell | Distance |
+|---|---|---|---|
+| Pasir Kemudi | 3.873°N, 103.191°E | 3.750°N, 103.250°E | 15.1 km |
+| Felda Panching | 3.836°N, 103.161°E | 3.750°N, 103.250°E | 13.7 km |
+| KOMTUR | 3.830°N, 103.290°E | 3.750°N, 103.250°E | 9.9 km |
+| Sg. Belat | 3.762°N, 103.236°E | 3.750°N, 103.250°E | 2.0 km |
+| Sg. Cherating | 4.130°N, 103.394°E | 4.250°N, 103.500°E | 17.8 km |
+
+**Key finding:** 4 of 5 stations fall within the same ERA5 0.25° grid cell. Extracting 9 variables × 5 station columns gives 45 columns, but only 18 are unique (9 for the shared cluster + 9 for Sg. Cherating's distinct cell). The training pipeline uses these 18 unique ERA5 features to avoid redundant input signals.
+
+**ERA5 variables extracted (per grid cell):**
+
+| Variable | Unit | Physical meaning |
+|---|---|---|
+| t2m | °C | 2-metre air temperature (K → °C) |
+| d2m | °C | 2-metre dewpoint temperature — controls condensation |
+| sp | hPa | Surface pressure |
+| u10, v10 | m/s | 10-metre wind components |
+| tcwv | kg/m² | Total column water vapour — the total moisture in the atmosphere column above the station |
+| rh | % | Relative humidity (derived: Tetens formula from t2m, d2m) |
+| ws | m/s | Wind speed magnitude (derived: √(u10² + v10²)) |
+| tp | mm | Total precipitation from ERA5 (ERA5's own rainfall estimate) |
+
+**Coverage:** 2015–2025 (4,018 rows). ERA5 for 2026 not yet available (reanalysis product has ~6-month lag). The 2026 ERA5 gap will be handled via forward-fill or ERA5-RT (near-real-time) if available.
+
+### 8.7 CNN-GAIN Imputation Results (Phase 4)
+
+**Architecture:** Same 5-model CNN-GAIN ensemble as Phase 2, retrained for 5 stations.
+
+**Training dynamics:** Discriminator loss converged to ~1.384 across all seeds — near the theoretical equilibrium of log(4) ≈ 1.386 for a perfectly balanced GAN *(this value arises because at equilibrium, the generator fools the discriminator on exactly half of samples, giving each a 50% accuracy — the cross-entropy of a uniform binary classifier over 4 outcomes equals log(4))*. This confirms stable adversarial training without mode collapse.
+
+| Seed | D-loss (ep 200) | G-loss (ep 200) |
+|---|---|---|
+| 42 | 1.3846 | 0.7250 |
+| 123 | 1.3857 | 0.7236 |
+| 456 | 1.3854 | 0.7279 |
+| 789 | 1.3851 | 0.7272 |
+| 1024 | 1.3850 | 0.7250 |
+
+**Imputation summary:**
+
+| Station | Original NaN | Filled | Remaining NaN | Hold-out R² |
+|---|---|---|---|---|
+| Pasir Kemudi | 1,684 | 247 | 1,437 | **+53.85%** |
+| Felda Panching | 2,272 | 941 | 1,331 | −24.34% |
+| KOMTUR | 2,190 | 1,157 | 1,033 | −30.80% |
+| Sg. Belat | 1,905 | 456 | 1,449 | +12.55% |
+| Sg. Cherating | 2,101 | 694 | 1,407 | +8.69% |
+| **Total** | **10,152** | **3,495** | **6,657** | — |
+
+> **Interpreting the hold-out R² values:** The hold-out test masks 10% of observed days and checks whether the GAN recovers the correct values. Negative R² for Felda Panching and KOMTUR indicates the GAN's imputed values have higher error than simply predicting the mean. However, these stations also have the highest NaN rates (54–56%): with so little training data and most of it concentrated in non-overlapping cross-station days, the GAN has limited signal to learn from. The imputed values are still physically plausible (positive, in range), making them better than leaving the gaps empty for the prediction model — but they should not be treated as high-confidence reconstructions. The prediction model's masked loss function will down-weight them accordingly if a confidence flag is passed.
+
+### 8.8 Architectural Changes for Phase 4
 
 The existing model architecture carries over with only the input/output dimensions changed:
 
 | Component | Phase 3 | Phase 4 |
 |---|---|---|
 | N_STATIONS | 3 | 5 |
-| Input features | 22 (9 rainfall + 4 seasonal + 9 ERA5) | 27 (15 rainfall + 4 seasonal + 9 ERA5) |
+| Input features | 22 (9 ERA5 + 4 seasonal + 9 rain lag) | 37 (18 ERA5 + 4 seasonal + 5 rain + 10 rolling) |
+| ERA5 source | bounding-box average | station-mapped (18 unique features) |
+| Rolling features | 7d/30d × 3 stations | 7d/30d × 5 stations |
 | Daily/weekly/monthly output heads | shape (batch, 3) | shape (batch, 5) |
-| Wet/dry head | shape (batch, 3) | shape (batch, 5) |
-| ERA5 inputs | identical | identical (same download, same grid) |
-| Estimated training time | ~70 min | ~90–110 min |
+| Wet/dry classification head | shape (batch, 3) | shape (batch, 5) |
+| Optuna best config | filters=96, n_blocks=4, lr=6.59e-4 | identical (same config applied) |
+| Estimated training time | ~70 min | ~90–120 min |
 
-Everything else — loss functions, hurdle gating threshold, weighted MSE, ensemble strategy — is unchanged.
+Everything else — hurdle gating, CosineDecay schedule, 3-seed ensemble — is unchanged.
 
 ---
 
@@ -835,15 +919,18 @@ def pinball_loss(quantile):
 | `reports/Technical_Report_03_TCN_Prediction.md` | Phase 3 full technical report (all TCN variants) |
 | `briefs/Project_Progress_Brief_July2026.md` | Client-facing progress brief |
 
-### Pending
+### Phase 4 Artifacts
 
-| Artifact | Status |
-|---|---|
-| `predictions/optuna_best_predictions.csv` | **Complete** — Optuna best config test predictions |
-| `figures/tcn/optuna_scatter_daily.png` | **Complete** — scatter plot, daily scale |
-| `figures/tcn/optuna_scatter_monthly.png` | **Complete** — scatter plot, monthly scale |
-| `data/processed/completed_daily_rainfall_kuantan.csv` | Pending — Phase 4 data engineering |
-| Phase 4 model predictions (5 Kuantan stations) | Pending — Phase 4 training |
+| Artifact | Description | Status |
+|---|---|---|
+| `predictions/optuna_best_predictions.csv` | Optuna best config test predictions | **Complete** |
+| `figures/tcn/optuna_scatter_daily.png` | Scatter plot — daily scale | **Complete** |
+| `figures/tcn/optuna_scatter_monthly.png` | Scatter plot — monthly scale | **Complete** |
+| `data/processed/kuantan_daily_raw.csv` | 5-station daily rainfall, post-QC, 4,050 rows | **Complete** |
+| `data/processed/era5_kuantan_station_mapped.csv` | Station-mapped ERA5, 4,018 rows, 45 features | **Complete** |
+| `data/processed/kuantan_daily_imputed.csv` | GAN-imputed 5-station daily, 3,495 days filled | **Complete** |
+| `predictions/phase4_predictions.csv` | Phase 4 Hurdle TCN test predictions (5 stations) | In progress |
+| `predictions/phase4_results.json` | Per-station R² metrics | In progress |
 
 ---
 

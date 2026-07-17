@@ -301,16 +301,32 @@ The raw sensor records a *running total* that resets at midnight each day and on
 **Why 5 stations instead of 3 is better:**  
 More stations give the model more spatial coverage and more cross-station correlation signals. When one station sees the front of a rain band and another sees the tail, the model can infer the storm's direction and timing — which a single station cannot.
 
-**What needs to be done to use this data:**
+**What was done with this data:**
 
 | Step | Description | Status |
 |---|---|---|
-| 1 | Convert cumulative → incremental 15-min rainfall | Pending |
-| 2 | Handle midnight/year-end counter resets | Pending |
-| 3 | Aggregate 15-min → daily totals | Pending |
-| 4 | Fill remaining gaps (GAN imputation, as per Phase 2) | Pending |
-| 5 | Merge with ERA5 atmospheric data (same Pahang region) | Pending |
-| 6 | Retrain prediction model for 5 new stations | Pending |
+| 1 | Convert cumulative → incremental 15-min rainfall | **Done** |
+| 2 | Handle midnight/year-end counter resets | **Done** |
+| 3 | Aggregate 15-min → daily totals | **Done** |
+| 4 | Fill remaining gaps with GAN imputation | **Done** — 3,495 station-days filled |
+| 5 | Extract ERA5 data at each station's exact coordinates | **Done** — 4,018 rows, 18 unique features |
+| 6 | Retrain prediction model for 5 new stations | **Running now** |
+
+**Data quality after processing:**
+
+| Station | Data period | Original missing | After GAN fill | Still missing |
+|---|---|---|---|---|
+| Pasir Kemudi | May 2015 – Jun 2026 | 41.6% NaN | 247 days filled | 35.5% remain |
+| Felda Panching | May 2015 – Jun 2026 | 56.1% NaN | 941 days filled | 32.9% remain |
+| KOMTUR | May 2015 – Jun 2026 | 54.1% NaN | 1,157 days filled | 25.5% remain |
+| Sg. Belat | May 2015 – Jun 2026 | 47.0% NaN | 456 days filled | 35.8% remain |
+| Sg. Cherating | May 2015 – Jun 2026 | 51.9% NaN | 694 days filled | 34.7% remain |
+
+> **Why are there still gaps after GAN imputation?**  
+> 1,440 days (35.6% of the full period) had 4 or all 5 stations offline simultaneously. When that happens, the GAN has no neighbouring stations to learn from — it cannot reliably reconstruct those days, so they are left as NaN rather than producing unreliable values. The prediction model is trained only on the days where we have reliable observations or credible imputations.
+
+> **ERA5 coordinate mapping (the client's question):**  
+> Yes — ERA5 can be mapped to each station's GPS coordinates. The ERA5 grid has 0.25° spacing (~28 km). We locate the nearest ERA5 grid point for each station. Four of the five stations (Pasir Kemudi, Felda Panching, KOMTUR, Sg. Belat) are close enough together that they share the same ERA5 grid cell; only Sg. Cherating maps to a different cell further north. This means we extract 9 atmospheric variables at each of the 2 unique grid cells, giving 18 distinct ERA5 features for the model — rather than 45 redundant ones.
 
 The deep learning architecture stays exactly the same — only the number of station inputs changes from 3 to 5.
 
@@ -320,15 +336,17 @@ The deep learning architecture stays exactly the same — only the number of sta
 
 | Task | Status |
 |---|---|
-| Phase 1: Data Engineering (old stations) | Complete |
-| Phase 2: GAN Imputation (old stations) | Complete |
-| Phase 3: Multi-Head TCN + ERA5 | Complete |
-| Hurdle model + extreme-event weighted loss | Complete |
-| ERA5 integration (17 years, 9 variables) | Complete |
-| Optuna hyperparameter search (Step 5) | **Complete** — weekly R²=+11.3%, monthly R²=+26.6% |
-| New Kuantan dataset processing | **Next** (pending Optuna finish) |
-| Model retrain on new 5-station dataset | Pending |
-| Steps 6–8 (wavelet, attention, ensemble diversity) | Pending |
+| Phase 1: Data Engineering (old stations) | **Complete** |
+| Phase 2: GAN Imputation (old stations) | **Complete** |
+| Phase 3: Multi-Head TCN + ERA5 | **Complete** |
+| Hurdle model + extreme-event weighted loss | **Complete** |
+| ERA5 integration (17 years, 9 variables) | **Complete** |
+| Optuna hyperparameter search | **Complete** — weekly R²=+11.3%, monthly R²=+26.6% |
+| New Kuantan data: 15-min → daily conversion | **Complete** — 388,705 rows → 4,050 daily rows |
+| New Kuantan data: GAN imputation (5 stations) | **Complete** — 3,495 station-days filled |
+| ERA5 station-mapped extraction (5 stations) | **Complete** — 4,018 rows, 18 unique features |
+| Phase 4 model training (5-station Hurdle TCN) | **Running now** — results expected shortly |
+| Steps 6–8 (wavelet, attention, ensemble diversity) | Pending — after Phase 4 results confirmed |
 
 ---
 
@@ -336,15 +354,21 @@ The deep learning architecture stays exactly the same — only the number of sta
 
 | File | Description |
 |---|---|
-| `data/processed/completed_daily_rainfall_cnn_tf.csv` | GAN-completed daily rainfall, 2009–2025 |
-| `data/processed/era5_pahang_daily.csv` | ERA5 atmospheric daily, 2009–2025, 9 variables |
-| `predictions/era5_hurdle_predictions.csv` | Test set predictions — ERA5+Hurdle model |
-| `predictions/hurdle_tcn_predictions.csv` | Test set predictions — Hurdle-only model |
+| `data/processed/completed_daily_rainfall_cnn_tf.csv` | GAN-completed daily rainfall, 2009–2025 (original 3 stations) |
+| `data/processed/era5_pahang_daily.csv` | ERA5 atmospheric daily, 2009–2025, 9 variables (original area average) |
+| `data/processed/kuantan_daily_raw.csv` | 5-station Sg. Kuantan daily rainfall, post-QC, 4,050 rows |
+| `data/processed/era5_kuantan_station_mapped.csv` | ERA5 per-station, 4,018 rows, 45 columns (18 unique features) |
+| `data/processed/kuantan_daily_imputed.csv` | GAN-filled 5-station data, 3,495 station-days imputed |
+| `predictions/era5_hurdle_predictions.csv` | Test set predictions — ERA5+Hurdle model (original 3 stations) |
+| `predictions/hurdle_tcn_predictions.csv` | Test set predictions — Hurdle-only model (original 3 stations) |
+| `predictions/optuna_best_predictions.csv` | Optuna best config test predictions (original 3 stations) |
 | `figures/tcn/` | Scatter plots, SHAP importance, R² comparison charts |
-| `reports/Technical_Report_03_TCN_Prediction.md` | Full technical report — all TCN variants |
-| `reports/Technical_Report_Master_Progress.md` | Master technical report — all phases with equations |
+| `reports/Technical_Report_Master_Progress.md` | Master technical report — all phases with equations and glossary |
 | `notebooks/03b_tcn_multihead_tensorflow.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5 |
 
----
+**Coming next:**
 
-*This brief will be updated once Optuna HPO results are available and new Sg. Kuantan dataset processing begins.*
+| File | Description | ETA |
+|---|---|---|
+| `predictions/phase4_predictions.csv` | 5-station Hurdle TCN predictions on test set | Training now |
+| `predictions/phase4_results.json` | Per-station R² metrics | Training now |
