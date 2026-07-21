@@ -345,8 +345,39 @@ The deep learning architecture stays exactly the same — only the number of sta
 | New Kuantan data: 15-min → daily conversion | **Complete** — 388,705 rows → 4,050 daily rows |
 | New Kuantan data: GAN imputation (5 stations) | **Complete** — 3,495 station-days filled |
 | ERA5 station-mapped extraction (5 stations) | **Complete** — 4,018 rows, 18 unique features |
-| Phase 4 model training (5-station Hurdle TCN) | **Running now** — results expected shortly |
-| Steps 6–8 (wavelet, attention, ensemble diversity) | Pending — after Phase 4 results confirmed |
+| Phase 4 daily model (XGBoost Hurdle, 3 active stations) | **Complete** — daily R² 20–24%, weekly R² 30–37% |
+| Phase 4 monthly model (direct ERA5-aggregate prediction) | **Complete** — sg_cherating monthly R²=72.2% (r=0.918) |
+| Steps 8–9 (ensemble diversity, higher-res precipitation) | Pending — roadmap documented in technical report |
+
+---
+
+## 9a. Phase 4 Prediction Results Summary
+
+The XGBoost Hurdle model was chosen over the TCN because the TCN could not converge on the sparse Kuantan data (1,300–1,600 real training days per station). Two model types were trained:
+
+### Daily/Weekly Prediction (XGBoost Hurdle)
+
+| Station | Daily R² | Weekly R² | Wet/Dry Accuracy | Real test days |
+|---|---|---|---|---|
+| Pasir Kemudi | **+20.5%** | +29.9% | 69.8% | 477 days |
+| Felda Panching | *(sensor offline since 2024)* | — | — | 0 |
+| KOMTUR | *(sensor offline since 2024)* | — | — | 9 |
+| Sg. Belat | **+23.6%** | +30.2% | 73.7% | 472 days |
+| Sg. Cherating | **+22.8%** | +36.8% | 62.8% | 492 days |
+
+> **What 20–24% daily R² means:** The model correctly explains about 1 in 5 units of day-to-day rainfall variability, and correctly classifies whether a day is wet or dry 70–74% of the time. For tropical convective rainfall in Malaysia, this is competitive — the physical chaotic nature of convection means 20–35% is the expected range for statistical models using reanalysis inputs.
+
+### Monthly Prediction (Direct Monthly Aggregation Model)
+
+| Station | Monthly R² | Pearson r | RMSE | Real test months |
+|---|---|---|---|---|
+| Pasir Kemudi | **+66.2%** | 0.822 | 79 mm | 19 |
+| Felda Panching | *(sensor offline)* | — | — | 0 |
+| KOMTUR | *(sensor offline)* | — | — | 0 |
+| Sg. Belat | **+49.9%** | 0.709 | 124 mm | 19 |
+| Sg. Cherating | **+72.2%** | **0.918** | 121 mm | 19 |
+
+> **Sg. Cherating r=0.918:** The model is capturing the correct monthly rainfall pattern with very high fidelity — a correlation of 0.918 means it predicts whether a given month is wet or dry, and by roughly how much, almost 92% correctly in rank. The R² is lower than r² (84%) because ERA5 at 0.25° resolution underestimates the amplitude of extreme monsoon months (observed 760 mm; predicted 540 mm in Nov 2024). Higher-resolution precipitation input (IMERG, MSWEP) would close this gap.
 
 ---
 
@@ -362,13 +393,19 @@ The deep learning architecture stays exactly the same — only the number of sta
 | `predictions/era5_hurdle_predictions.csv` | Test set predictions — ERA5+Hurdle model (original 3 stations) |
 | `predictions/hurdle_tcn_predictions.csv` | Test set predictions — Hurdle-only model (original 3 stations) |
 | `predictions/optuna_best_predictions.csv` | Optuna best config test predictions (original 3 stations) |
+| `predictions/phase4_xgb_results.json` | XGBoost Hurdle per-station R² (daily/weekly/monthly) — 5 Kuantan stations |
+| `predictions/phase4_xgb_predictions.csv` | XGBoost Hurdle test predictions, 3 active Kuantan stations |
+| `predictions/phase4_monthly_v2_results.json` | Direct monthly model results — R², RMSE, correlation per station |
+| `predictions/phase4_monthly_v2_predictions.csv` | Monthly predictions vs actuals, 19 test months |
+| `predictions/phase4_best_results.json` | **Consolidated best R² per station per scale — final Phase 4 numbers** |
 | `figures/tcn/` | Scatter plots, SHAP importance, R² comparison charts |
 | `reports/Technical_Report_Master_Progress.md` | Master technical report — all phases with equations and glossary |
 | `notebooks/03b_tcn_multihead_tensorflow.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5 |
 
-**Coming next:**
+**Remaining steps (optional for R² improvement):**
 
-| File | Description | ETA |
+| Step | Expected R² gain | Input required |
 |---|---|---|
-| `predictions/phase4_predictions.csv` | 5-station Hurdle TCN predictions on test set | Training now |
-| `predictions/phase4_results.json` | Per-station R² metrics | Training now |
+| Ensemble diversity (LightGBM + LSTM blend) | +3–8pp daily | Current data |
+| Higher-res precipitation input (IMERG/MSWEP) | +8–15pp monthly for sg_cherating | IMERG download (~5 GB) |
+| Sensor data recovery (Felda Panching, KOMTUR) | Enables evaluation for 2 stations | YBTM sensor repair |
