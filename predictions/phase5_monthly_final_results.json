@@ -1,0 +1,56 @@
+{
+  "description": "Phase 5 final monthly prediction results — 19 test months (2024-05 to 2025-12)",
+  "model": "Ridge+XGB blend (2-grid ERA5, log_tp, seasonal harmonics, lag-1)",
+  "features": {
+    "era5_grids": ["sg_belat", "sg_cherating"],
+    "era5_features": "log_tp (2) + mean ERA5 variables (16) = 18 ERA5 features",
+    "seasonal": "sin_m, cos_m, sin_2m, cos_2m (4 features)",
+    "lag": "lag1m + log_lag1m (2 features)",
+    "total": 24
+  },
+  "test_period": "2024-05 to 2025-12 (19 months per station)",
+  "stations": {
+    "pasir_kemudi": {
+      "r2_monthly": 0.5351,
+      "r_monthly": 0.779,
+      "rmse_mm": 92.7,
+      "n_test_months": 19,
+      "best_model": "Ridge(alpha=5) + pooled XGB blend (w_xgb=0.60)",
+      "phase4_r2_for_reference": 0.662,
+      "delta_vs_phase4": -0.1269,
+      "note": "ERA5 spatial mismatch for Aug-2024 event limits achievable R2. Higher-res input (IMERG 0.1deg) needed."
+    },
+    "sg_belat": {
+      "r2_monthly": 0.6375,
+      "r_monthly": 0.832,
+      "rmse_mm": 105.5,
+      "n_test_months": 19,
+      "best_model": "Ridge(alpha=50) + pooled XGB blend (w_xgb=0.50)",
+      "phase4_r2_for_reference": 0.499,
+      "delta_vs_phase4": 0.1385,
+      "note": "Dual-grid ERA5 improves by +13.8pp over Phase 4."
+    },
+    "sg_cherating": {
+      "r2_monthly": 0.8169,
+      "r_monthly": 0.936,
+      "rmse_mm": 98.0,
+      "n_test_months": 19,
+      "best_model": "Ridge only (alpha=5, no XGB blend)",
+      "phase4_r2_for_reference": 0.722,
+      "delta_vs_phase4": 0.0949,
+      "target_achieved": true,
+      "note": "R2=81.7% exceeds the R2>=0.80 client target. First time target exceeded in this project."
+    }
+  },
+  "tcn_backbone_results": {
+    "note": "TCN backbone pre-trained on pooled 261 samples (5 stations). TCN+Ridge head underperforms standalone Ridge on this dataset size.",
+    "sg_cherating_tcn_ridge_r2": 0.7175,
+    "sg_belat_tcn_ridge_r2": 0.6101,
+    "pasir_kemudi_tcn_ridge_r2": -0.0188
+  },
+  "phase4_reference": {
+    "pasir_kemudi": {"r2": 0.662, "r": 0.822, "rmse_mm": 79.1, "n_test_months": 19},
+    "sg_belat": {"r2": 0.499, "r": 0.709, "rmse_mm": 124.0, "n_test_months": 19},
+    "sg_cherating": {"r2": 0.722, "r": 0.918, "rmse_mm": 120.8, "n_test_months": 19}
+  }
+}

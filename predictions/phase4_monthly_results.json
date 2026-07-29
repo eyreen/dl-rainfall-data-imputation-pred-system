@@ -1,0 +1,43 @@
+{
+  "pasir_kemudi": {
+    "r2_monthly": 0.4257522609290505,
+    "r2_xgb": 0.36749296854494595,
+    "r2_ridge": -0.31101526930942636,
+    "r2_blend": 0.4257522609290505,
+    "rmse_mm": 103.03154451174035,
+    "bias_mm": 47.60911881296258,
+    "corr": 0.7591634666142624,
+    "n_test_months": 19,
+    "best_model": "blend"
+  },
+  "felda_panching": {
+    "r2_monthly": null,
+    "note": "sensor offline, n_test=0"
+  },
+  "komtur": {
+    "r2_monthly": null,
+    "note": "sensor offline, n_test=0"
+  },
+  "sg_belat": {
+    "r2_monthly": 0.2678899903924681,
+    "r2_xgb": 0.2678899903924681,
+    "r2_ridge": -0.39788124497792143,
+    "r2_blend": 0.23722270480944319,
+    "rmse_mm": 149.86786048607726,
+    "bias_mm": 36.088509007504115,
+    "corr": 0.7225403584848092,
+    "n_test_months": 19,
+    "best_model": "xgb"
+  },
+  "sg_cherating": {
+    "r2_monthly": 0.7223487251008578,
+    "r2_xgb": 0.5624739715932482,
+    "r2_ridge": 0.6951875044311008,
+    "r2_blend": 0.7223487251008578,
+    "rmse_mm": 120.67289015793158,
+    "bias_mm": 30.62992457339638,
+    "corr": 0.9040092136715443,
+    "n_test_months": 19,
+    "best_model": "blend"
+  }
+}

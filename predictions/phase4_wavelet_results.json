@@ -1,0 +1,35 @@
+{
+  "pasir_kemudi": {
+    "r2_daily": 0.2532309897255458,
+    "r2_weekly": 0.2943750848469554,
+    "r2_monthly": -0.061001680375714074,
+    "wet_dry_acc": 0.6771488469601677,
+    "n_real_test": 477
+  },
+  "felda_panching": {
+    "r2_daily": null,
+    "r2_weekly": null,
+    "r2_monthly": null,
+    "note": "sensor offline, n_real_test=0"
+  },
+  "komtur": {
+    "r2_daily": null,
+    "r2_weekly": null,
+    "r2_monthly": null,
+    "note": "sensor offline, n_real_test=9"
+  },
+  "sg_belat": {
+    "r2_daily": 0.22223858438442134,
+    "r2_weekly": 0.26521882559512366,
+    "r2_monthly": 0.36671633529305425,
+    "wet_dry_acc": 0.7436440677966102,
+    "n_real_test": 472
+  },
+  "sg_cherating": {
+    "r2_daily": 0.18209318508292183,
+    "r2_weekly": 0.24398226846998083,
+    "r2_monthly": 0.22863360863696458,
+    "wet_dry_acc": 0.6178861788617886,
+    "n_real_test": 492
+  }
+}
