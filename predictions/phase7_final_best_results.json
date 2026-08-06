@@ -1,0 +1,474 @@
+{
+  "description": "Phase 7 final best-of \u2014 max R\u00b2 per station across Phase 6 (Ridge + TCN+Ridge) and Phase 7 (Ridge + IMERG + climate)",
+  "note": "Phase 6 test: May 2024\u2013Dec 2025 (19\u201320 months). Phase 7 test: May 2024\u2013Sep 2025 (13\u201317 months).",
+  "per_station": [
+    {
+      "river": "johor",
+      "station": "johor_bukit_besar",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": -0.1405,
+      "r": 0.3948,
+      "rmse": 132.2
+    },
+    {
+      "river": "johor",
+      "station": "johor_kg_semanggar",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "20.0",
+      "r2": 0.2347,
+      "r": 0.7754,
+      "rmse": 123.7
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_lim_lim",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": -0.5125,
+      "r": 0.212,
+      "rmse": NaN
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_nam_heng",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": 0.2784,
+      "r": 0.5663,
+      "rmse": 118.9
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_pekan",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": -0.6766,
+      "r": 0.0199,
+      "rmse": NaN
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_sedenak",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": -0.0095,
+      "r": 0.1645,
+      "rmse": NaN
+    },
+    {
+      "river": "johor",
+      "station": "johor_layang_layang",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": -0.1654,
+      "r": 0.2199,
+      "rmse": 125.0
+    },
+    {
+      "river": "johor",
+      "station": "johor_lepau",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "100.0",
+      "r2": 0.5579,
+      "r": 0.8153,
+      "rmse": 104.5
+    },
+    {
+      "river": "johor",
+      "station": "johor_pasak",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": -0.1455,
+      "r": 0.5932,
+      "rmse": NaN
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_johor_di_kota_tinggi",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "50.0",
+      "r2": 0.3247,
+      "r": 0.8476,
+      "rmse": 134.7
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_kepala_orang_di_kg_sri_jaya",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge_only",
+      "r2": -0.8983,
+      "r": 0.1778,
+      "rmse": 165.3
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_linggiu_di_linggiu",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": -0.1173,
+      "r": 0.2264,
+      "rmse": 112.6
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_sembilang_di_kg_sg_sembilang",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge_only",
+      "r2": -0.514,
+      "r": -0.091,
+      "rmse": 164.0
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_siam_di_kg_sg_siam",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "100.0",
+      "r2": 0.4367,
+      "r": 0.7647,
+      "rmse": 60.0
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_siku_di_kg_murni_jaya",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": -0.1651,
+      "r": 0.4426,
+      "rmse": 110.7
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_tiram_di_kg_bukit_dagang",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge_only",
+      "r2": -0.5301,
+      "r": -0.1158,
+      "rmse": 204.3
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_tiram_di_klinik_kesihatan_ulu_tiram",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": 0.2081,
+      "r": 0.6338,
+      "rmse": 177.1
+    },
+    {
+      "river": "johor",
+      "station": "johor_ulu_sebol",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": 0.0323,
+      "r": 0.4934,
+      "rmse": 114.0
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_felcra_sebapin",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": 0.2544,
+      "r": 0.7567,
+      "rmse": 168.4
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sek_keb_felda_bukit_tangga",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": -0.0113,
+      "r": 0.5546,
+      "rmse": NaN
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sek_keb_kampung_bukit",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "100.0",
+      "r2": -0.6376,
+      "r": 0.575,
+      "rmse": 250.5
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sek_keb_lamdin",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": 0.4863,
+      "r": 0.7117,
+      "rmse": NaN
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_badak_di_akademi_binaan_malaysia_abm",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": -0.1491,
+      "r": 0.6064,
+      "rmse": NaN
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_durian_burung_di_durian_burung",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": 0.1348,
+      "r": 0.8266,
+      "rmse": 213.1
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_padang_sanai_di_padang_sanai",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "50.0",
+      "r2": -0.2225,
+      "r": 0.8031,
+      "rmse": 210.6
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_padang_terap_di_kepala_batas",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": 0.0732,
+      "r": 0.593,
+      "rmse": 159.9
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_sari_di_kilang_gula_padang_terap",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "10.0",
+      "r2": 0.4003,
+      "r": 0.7162,
+      "rmse": 209.1
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_sintok_di_uum_sintok",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": 0.5066,
+      "r": 0.7197,
+      "rmse": NaN
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_temin_di_kg_jeragan",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": 0.5187,
+      "r": 0.7913,
+      "rmse": 58.3
+    },
+    {
+      "river": "klang",
+      "station": "klang_empangan_batu",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": -0.3608,
+      "r": 0.6598,
+      "rmse": 204.3
+    },
+    {
+      "river": "klang",
+      "station": "klang_empangan_klang_gates",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": 0.1267,
+      "r": 0.4759,
+      "rmse": 185.2
+    },
+    {
+      "river": "klang",
+      "station": "klang_genting_sempah",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "100.0",
+      "r2": -0.9018,
+      "r": 0.2641,
+      "rmse": 226.7
+    },
+    {
+      "river": "klang",
+      "station": "klang_gombak_simpang_3",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": -0.0543,
+      "r": 0.5406,
+      "rmse": 259.4
+    },
+    {
+      "river": "klang",
+      "station": "klang_jps_ampang",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "100.0",
+      "r2": 0.1719,
+      "r": 0.8984,
+      "rmse": 170.0
+    },
+    {
+      "river": "klang",
+      "station": "klang_jps_wilayah",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "50.0",
+      "r2": 0.2171,
+      "r": 0.6602,
+      "rmse": 199.0
+    },
+    {
+      "river": "klang",
+      "station": "klang_kg_berembang_smart",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": -0.1313,
+      "r": 0.458,
+      "rmse": 281.1
+    },
+    {
+      "river": "klang",
+      "station": "klang_kg_sg_tua_empangan_batu",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": -0.0224,
+      "r": 0.5601,
+      "rmse": 194.2
+    },
+    {
+      "river": "klang",
+      "station": "klang_kolam_takungan_batu",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": 0.1181,
+      "r": 0.7414,
+      "rmse": 194.2
+    },
+    {
+      "river": "klang",
+      "station": "klang_ladang_edinburgh",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": 0.027,
+      "r": 0.4313,
+      "rmse": 267.8
+    },
+    {
+      "river": "klang",
+      "station": "klang_lembah_jaya",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "200.0",
+      "r2": -0.1038,
+      "r": 0.5458,
+      "rmse": 181.1
+    },
+    {
+      "river": "klang",
+      "station": "klang_pandan_indah",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": 0.2797,
+      "r": 0.7763,
+      "rmse": 191.4
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_bunus_di_jln_tun_razak",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": -0.4551,
+      "r": 0.4444,
+      "rmse": 251.8
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_kerayong_di_kg_cheras_baru",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "100.0",
+      "r2": -0.0294,
+      "r": 0.6908,
+      "rmse": 207.4
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_jambatan_petaling",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": 0.2318,
+      "r": 0.543,
+      "rmse": 277.0
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_kg_berembang",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge_only",
+      "r2": 0.6281,
+      "r": 0.821,
+      "rmse": 59.1
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_leboh_pasar",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": -0.1621,
+      "r": 0.4405,
+      "rmse": 219.2
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_lembah_keramat",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "500.0",
+      "r2": -0.0772,
+      "r": 0.6197,
+      "rmse": 202.7
+    },
+    {
+      "river": "klang",
+      "station": "klang_taman_ehsan",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge",
+      "r2": -0.1693,
+      "r": 0.4626,
+      "rmse": 234.4
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_komtur",
+      "best_phase": "Phase6",
+      "best_model": "TCN+Ridge_only",
+      "r2": -44.5871,
+      "r": 0.0168,
+      "rmse": 65.1
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_pasir_kemudi",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": 0.521,
+      "r": 0.738,
+      "rmse": NaN
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_sg_belat",
+      "best_phase": "Phase7_Ridge_Enhanced",
+      "best_model": "20.0",
+      "r2": 0.6423,
+      "r": 0.8386,
+      "rmse": 90.1
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_sg_cherating",
+      "best_phase": "Phase6",
+      "best_model": "Ridge",
+      "r2": 0.8074,
+      "r": 0.9579,
+      "rmse": NaN
+    }
+  ]
+}
