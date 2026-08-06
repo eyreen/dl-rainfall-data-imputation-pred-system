@@ -1,0 +1,26 @@
+{
+  "pasir_kemudi": {
+    "r2_ridge": 0.3337923605605295,
+    "r2_blend": 0.3337923605605295,
+    "r_blend": 0.6597786419512938,
+    "rmse_blend": 110.97505462969306,
+    "n_test_months": 19,
+    "blend_w_xgb": 0.0
+  },
+  "sg_belat": {
+    "r2_ridge": 0.5803936436701941,
+    "r2_blend": 0.5803936436701941,
+    "r_blend": 0.7681348018663083,
+    "rmse_blend": 113.4596303281113,
+    "n_test_months": 19,
+    "blend_w_xgb": 0.0
+  },
+  "sg_cherating": {
+    "r2_ridge": 0.8168956650012558,
+    "r2_blend": 0.8168956650012558,
+    "r_blend": 0.9358356221441515,
+    "rmse_blend": 97.99619011127109,
+    "n_test_months": 19,
+    "blend_w_xgb": 0.0
+  }
+}

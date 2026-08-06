@@ -1,0 +1,426 @@
+{
+  "description": "Phase 6 \u2014 per-river Ridge regression baseline",
+  "model": "RidgeCV (alpha sweep), StandardScaler, 15 ERA5 features",
+  "training_period": "2015-01 to 2024-04 (train+val combined)",
+  "test_period": "2024-05 to 2025-12",
+  "river_summary": {
+    "johor": {
+      "n_stations": 15,
+      "median_r2": -0.10406223144968263,
+      "mean_r2": -0.1482031438397245,
+      "max_r2": 0.3402270990136431,
+      "min_r2": -0.6766460231361551,
+      "n_positive_r2": 4,
+      "n_r2_ge50pct": 0,
+      "n_r2_ge80pct": 0
+    },
+    "kedah": {
+      "n_stations": 11,
+      "median_r2": -0.011300574533744445,
+      "mean_r2": -104.13249216321442,
+      "max_r2": 0.5065834708494543,
+      "min_r2": -1145.371580691238,
+      "n_positive_r2": 4,
+      "n_r2_ge50pct": 1,
+      "n_r2_ge80pct": 0
+    },
+    "klang": {
+      "n_stations": 18,
+      "median_r2": -0.2657177807740322,
+      "mean_r2": -0.5052353852093608,
+      "max_r2": 0.18892856941185832,
+      "min_r2": -2.307951228395693,
+      "n_positive_r2": 2,
+      "n_r2_ge50pct": 0,
+      "n_r2_ge80pct": 0
+    },
+    "kuantan": {
+      "n_stations": 3,
+      "median_r2": 0.5210047753218001,
+      "mean_r2": 0.5853795287926299,
+      "max_r2": 0.807440541055048,
+      "min_r2": 0.4276932700010416,
+      "n_positive_r2": 3,
+      "n_r2_ge50pct": 2,
+      "n_r2_ge80pct": 1
+    }
+  },
+  "per_station": {
+    "johor::johor_bukit_besar": {
+      "r2": -0.25362555301577916,
+      "r": -0.07833706370039015,
+      "rmse_mm": 129.87712554854,
+      "n_train": 98,
+      "n_test": 20,
+      "ridge_alpha": 500.0
+    },
+    "johor::johor_kg_semanggar": {
+      "r2": -0.10406223144968263,
+      "r": 0.4205428974114562,
+      "rmse_mm": 144.1714109916347,
+      "n_train": 29,
+      "n_test": 20,
+      "ridge_alpha": 500.0
+    },
+    "johor::johor_ladang_lim_lim": {
+      "r2": -0.5124859924713421,
+      "r": 0.21197212869396304,
+      "rmse_mm": 220.22143729864374,
+      "n_train": 40,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "johor::johor_ladang_nam_heng": {
+      "r2": 0.03133077705781451,
+      "r": 0.32990927268875103,
+      "rmse_mm": 145.25483832210537,
+      "n_train": 70,
+      "n_test": 19,
+      "ridge_alpha": 50.0
+    },
+    "johor::johor_ladang_pekan": {
+      "r2": -0.6766460231361551,
+      "r": 0.01993556917586224,
+      "rmse_mm": 136.56045700046835,
+      "n_train": 31,
+      "n_test": 20,
+      "ridge_alpha": 500.0
+    },
+    "johor::johor_ladang_sedenak": {
+      "r2": -0.009545931745675862,
+      "r": 0.16451252283900597,
+      "rmse_mm": 115.40404391457284,
+      "n_train": 50,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "johor::johor_layang_layang": {
+      "r2": -0.2711136697673864,
+      "r": 0.21865066650322615,
+      "rmse_mm": 130.28334373883385,
+      "n_train": 98,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "johor::johor_lepau": {
+      "r2": 0.3402270990136431,
+      "r": 0.7242774344402902,
+      "rmse_mm": 122.4168841893871,
+      "n_train": 59,
+      "n_test": 16,
+      "ridge_alpha": 5.0
+    },
+    "johor::johor_pasak": {
+      "r2": -0.14548157023765795,
+      "r": 0.5932411322169275,
+      "rmse_mm": 268.46130928958326,
+      "n_train": 49,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "johor::johor_sg_johor_di_kota_tinggi": {
+      "r2": 0.07851058450481063,
+      "r": 0.5227151122761793,
+      "rmse_mm": 145.4609800042378,
+      "n_train": 103,
+      "n_test": 20,
+      "ridge_alpha": 10.0
+    },
+    "johor::johor_sg_linggiu_di_linggiu": {
+      "r2": -0.6405765647797823,
+      "r": -0.08723231554020605,
+      "rmse_mm": 147.00115038939722,
+      "n_train": 67,
+      "n_test": 19,
+      "ridge_alpha": 5.0
+    },
+    "johor::johor_sg_siam_di_kg_sg_siam": {
+      "r2": 0.3111516443025535,
+      "r": 0.5801471290100231,
+      "rmse_mm": 64.67360950798829,
+      "n_train": 30,
+      "n_test": 19,
+      "ridge_alpha": 5.0
+    },
+    "johor::johor_sg_siku_di_kg_murni_jaya": {
+      "r2": -0.23479720030413853,
+      "r": 0.1774325916000433,
+      "rmse_mm": 110.82010096050499,
+      "n_train": 102,
+      "n_test": 18,
+      "ridge_alpha": 50.0
+    },
+    "johor::johor_sg_tiram_di_klinik_kesihatan_ulu_tiram": {
+      "r2": -0.05497631403932712,
+      "r": 0.26152179975252104,
+      "rmse_mm": 195.17003544082775,
+      "n_train": 101,
+      "n_test": 18,
+      "ridge_alpha": 50.0
+    },
+    "johor::johor_ulu_sebol": {
+      "r2": -0.080956211527762,
+      "r": 0.5219037783065634,
+      "rmse_mm": 122.01211265869125,
+      "n_train": 99,
+      "n_test": 18,
+      "ridge_alpha": 100.0
+    },
+    "kedah::kedah_felcra_sebapin": {
+      "r2": -0.1245637964755868,
+      "r": 0.7481345328502057,
+      "rmse_mm": 198.99630458324347,
+      "n_train": 21,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "kedah::kedah_sek_keb_felda_bukit_tangga": {
+      "r2": -0.011300574533744445,
+      "r": 0.5545809195335223,
+      "rmse_mm": 207.9205071037406,
+      "n_train": 78,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "kedah::kedah_sek_keb_kampung_bukit": {
+      "r2": -0.9371354373925358,
+      "r": 0.028532542172044713,
+      "rmse_mm": 905.0644649409916,
+      "n_train": 36,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "kedah::kedah_sek_keb_lamdin": {
+      "r2": 0.48630356119894513,
+      "r": 0.7116748161093204,
+      "rmse_mm": 106.15711446685046,
+      "n_train": 66,
+      "n_test": 18,
+      "ridge_alpha": 50.0
+    },
+    "kedah::kedah_sg_badak_di_akademi_binaan_malaysia_abm": {
+      "r2": -0.1490825088601726,
+      "r": 0.6064278342176901,
+      "rmse_mm": 195.17602924898853,
+      "n_train": 75,
+      "n_test": 20,
+      "ridge_alpha": 10.0
+    },
+    "kedah::kedah_sg_durian_burung_di_durian_burung": {
+      "r2": 0.06346998849385099,
+      "r": 0.7525939969466683,
+      "rmse_mm": 220.49680513927643,
+      "n_train": 65,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "kedah::kedah_sg_padang_sanai_di_padang_sanai": {
+      "r2": -0.22897549575075193,
+      "r": 0.8121388136031655,
+      "rmse_mm": 204.95145522644353,
+      "n_train": 44,
+      "n_test": 19,
+      "ridge_alpha": 100.0
+    },
+    "kedah::kedah_sg_padang_terap_di_kepala_batas": {
+      "r2": -0.010070665951714686,
+      "r": 0.7022219181080603,
+      "rmse_mm": 166.9253637398178,
+      "n_train": 88,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "kedah::kedah_sg_sari_di_kilang_gula_padang_terap": {
+      "r2": 0.3189383543015991,
+      "r": 0.6502673954532913,
+      "rmse_mm": 216.68722027004446,
+      "n_train": 76,
+      "n_test": 20,
+      "ridge_alpha": 0.1
+    },
+    "kedah::kedah_sg_sintok_di_uum_sintok": {
+      "r2": 0.5065834708494543,
+      "r": 0.7196945176234978,
+      "rmse_mm": 117.86495763183771,
+      "n_train": 48,
+      "n_test": 20,
+      "ridge_alpha": 10.0
+    },
+    "kedah::kedah_sg_temin_di_kg_jeragan": {
+      "r2": -1145.371580691238,
+      "r": 0.0,
+      "rmse_mm": 2831.6933243335125,
+      "n_train": 14,
+      "n_test": 3,
+      "ridge_alpha": 0.1
+    },
+    "klang::klang_empangan_batu": {
+      "r2": -0.661421305170147,
+      "r": 0.5137997718255096,
+      "rmse_mm": 226.45930596934988,
+      "n_train": 74,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_empangan_klang_gates": {
+      "r2": -1.996156837734818,
+      "r": -0.2221560702120679,
+      "rmse_mm": 359.97981158479354,
+      "n_train": 85,
+      "n_test": 7,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_genting_sempah": {
+      "r2": -0.9971949660833146,
+      "r": 0.23244035533419624,
+      "rmse_mm": 235.83849660609124,
+      "n_train": 88,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_gombak_simpang_3": {
+      "r2": -0.061730419752809684,
+      "r": 0.5773376602105155,
+      "rmse_mm": 260.4457518609287,
+      "n_train": 86,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_jps_ampang": {
+      "r2": -0.06563070063539489,
+      "r": 0.7167480558377837,
+      "rmse_mm": 200.52571946592766,
+      "n_train": 71,
+      "n_test": 17,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_jps_wilayah": {
+      "r2": -0.02069426998910484,
+      "r": 0.5931999833368511,
+      "rmse_mm": 223.913647750682,
+      "n_train": 88,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_kg_berembang_smart": {
+      "r2": -0.16312417383705458,
+      "r": 0.3557470741623359,
+      "rmse_mm": 295.3741136944854,
+      "n_train": 12,
+      "n_test": 16,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_kg_sg_tua_empangan_batu": {
+      "r2": -0.20816680672260413,
+      "r": 0.4440075812615107,
+      "rmse_mm": 205.29444202625342,
+      "n_train": 72,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_kolam_takungan_batu": {
+      "r2": 0.11116658445357386,
+      "r": 0.6227895978576833,
+      "rmse_mm": 192.977366849378,
+      "n_train": 82,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_ladang_edinburgh": {
+      "r2": -0.26233986610144955,
+      "r": 0.33755880545429123,
+      "rmse_mm": 300.0536039893274,
+      "n_train": 87,
+      "n_test": 20,
+      "ridge_alpha": 10.0
+    },
+    "klang::klang_lembah_jaya": {
+      "r2": -0.1972547892180727,
+      "r": 0.4957378493173002,
+      "rmse_mm": 198.98942667850523,
+      "n_train": 83,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_pandan_indah": {
+      "r2": -2.307951228395693,
+      "r": 0.23687116020315158,
+      "rmse_mm": 393.04471659604803,
+      "n_train": 84,
+      "n_test": 19,
+      "ridge_alpha": 0.1
+    },
+    "klang::klang_sg_bunus_di_jln_tun_razak": {
+      "r2": -0.6166820609116428,
+      "r": 0.32249234011323297,
+      "rmse_mm": 274.7409293395744,
+      "n_train": 77,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_sg_kerayong_di_kg_cheras_baru": {
+      "r2": -0.2690956954466148,
+      "r": 0.6148158013458411,
+      "rmse_mm": 226.41012377378198,
+      "n_train": 78,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_sg_klang_di_jambatan_petaling": {
+      "r2": 0.18892856941185832,
+      "r": 0.49245440647250843,
+      "rmse_mm": 278.3878288256105,
+      "n_train": 88,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_sg_klang_di_leboh_pasar": {
+      "r2": -0.3398495059479778,
+      "r": 0.3527715699402767,
+      "rmse_mm": 232.21742457738532,
+      "n_train": 88,
+      "n_test": 20,
+      "ridge_alpha": 50.0
+    },
+    "klang::klang_sg_klang_di_lembah_keramat": {
+      "r2": -0.38696145764050693,
+      "r": 0.49098199533434356,
+      "rmse_mm": 239.16044305997244,
+      "n_train": 77,
+      "n_test": 20,
+      "ridge_alpha": 100.0
+    },
+    "klang::klang_taman_ehsan": {
+      "r2": -0.8400780040467222,
+      "r": 0.809717531633323,
+      "rmse_mm": 219.08081265056018,
+      "n_train": 55,
+      "n_test": 15,
+      "ridge_alpha": 500.0
+    },
+    "kuantan::pasir_kemudi": {
+      "r2": 0.5210047753218001,
+      "r": 0.7379580255376612,
+      "rmse_mm": 94.09924851674971,
+      "n_train": 59,
+      "n_test": 19,
+      "ridge_alpha": 50.0
+    },
+    "kuantan::sg_belat": {
+      "r2": 0.4276932700010416,
+      "r": 0.8237141224908705,
+      "rmse_mm": 132.50576126186294,
+      "n_train": 51,
+      "n_test": 19,
+      "ridge_alpha": 50.0
+    },
+    "kuantan::sg_cherating": {
+      "r2": 0.807440541055048,
+      "r": 0.9579306345681015,
+      "rmse_mm": 100.49450303605397,
+      "n_train": 44,
+      "n_test": 19,
+      "ridge_alpha": 10.0
+    }
+  }
+}

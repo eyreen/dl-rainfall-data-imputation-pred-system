@@ -1,0 +1,386 @@
+[
+  {
+    "name": "Ladang Lim Lim",
+    "slug": "johor_ladang_lim_lim",
+    "lat": 1.520833,
+    "lon": 103.991667,
+    "col_idx": 1,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Tiram di Kg. Bukit Dagang",
+    "slug": "johor_sg_tiram_di_kg_bukit_dagang",
+    "lat": 1.588074,
+    "lon": 103.915888,
+    "col_idx": 3,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Tiram di Klinik Kesihatan Ulu Tiram",
+    "slug": "johor_sg_tiram_di_klinik_kesihatan_ulu_tiram",
+    "lat": 1.59708,
+    "lon": 103.82005,
+    "col_idx": 5,
+    "river": "johor"
+  },
+  {
+    "name": "Layang-Layang",
+    "slug": "johor_layang_layang",
+    "lat": 1.841111,
+    "lon": 103.468056,
+    "col_idx": 7,
+    "river": "johor"
+  },
+  {
+    "name": "Bukit Besar",
+    "slug": "johor_bukit_besar",
+    "lat": 1.766367,
+    "lon": 103.709017,
+    "col_idx": 9,
+    "river": "johor"
+  },
+  {
+    "name": "Kg. Semanggar",
+    "slug": "johor_kg_semanggar",
+    "lat": 1.753317,
+    "lon": 103.7835,
+    "col_idx": 11,
+    "river": "johor"
+  },
+  {
+    "name": "Ladang Nam Heng",
+    "slug": "johor_ladang_nam_heng",
+    "lat": 1.65255,
+    "lon": 103.9271,
+    "col_idx": 13,
+    "river": "johor"
+  },
+  {
+    "name": "Ladang Pekan",
+    "slug": "johor_ladang_pekan",
+    "lat": 1.853017,
+    "lon": 103.582367,
+    "col_idx": 15,
+    "river": "johor"
+  },
+  {
+    "name": "Lepau",
+    "slug": "johor_lepau",
+    "lat": 1.3941,
+    "lon": 104.15079,
+    "col_idx": 17,
+    "river": "johor"
+  },
+  {
+    "name": "Pasak",
+    "slug": "johor_pasak",
+    "lat": 1.716473,
+    "lon": 103.969406,
+    "col_idx": 19,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Johor di Kota Tinggi",
+    "slug": "johor_sg_johor_di_kota_tinggi",
+    "lat": 1.727222,
+    "lon": 103.893889,
+    "col_idx": 21,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Kepala Orang di Kg. Sri Jaya",
+    "slug": "johor_sg_kepala_orang_di_kg_sri_jaya",
+    "lat": 1.72,
+    "lon": 103.826389,
+    "col_idx": 23,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Linggiu di Linggiu",
+    "slug": "johor_sg_linggiu_di_linggiu",
+    "lat": 1.89271,
+    "lon": 103.69135,
+    "col_idx": 25,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Sembilang di Kg. Sg. Sembilang",
+    "slug": "johor_sg_sembilang_di_kg_sg_sembilang",
+    "lat": 1.646221,
+    "lon": 103.989754,
+    "col_idx": 27,
+    "river": "johor"
+  },
+  {
+    "name": "Ulu Sebol",
+    "slug": "johor_ulu_sebol",
+    "lat": 1.887778,
+    "lon": 103.623333,
+    "col_idx": 29,
+    "river": "johor"
+  },
+  {
+    "name": "Ladang Sedenak",
+    "slug": "johor_ladang_sedenak",
+    "lat": 1.721825,
+    "lon": 103.542222,
+    "col_idx": 31,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Siam di Kg. Sg. Siam",
+    "slug": "johor_sg_siam_di_kg_sg_siam",
+    "lat": 1.802592,
+    "lon": 103.489334,
+    "col_idx": 33,
+    "river": "johor"
+  },
+  {
+    "name": "Sg. Siku di Kg. Murni Jaya",
+    "slug": "johor_sg_siku_di_kg_murni_jaya",
+    "lat": 1.78681,
+    "lon": 103.53722,
+    "col_idx": 35,
+    "river": "johor"
+  },
+  {
+    "name": "Sek. Keb. Felda Bukit Tangga",
+    "slug": "kedah_sek_keb_felda_bukit_tangga",
+    "lat": 6.494645,
+    "lon": 100.473505,
+    "col_idx": 1,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Badak di Akademi Binaan Malaysia (ABM)",
+    "slug": "kedah_sg_badak_di_akademi_binaan_malaysia_abm",
+    "lat": 6.450434,
+    "lon": 100.528718,
+    "col_idx": 3,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Padang Terap di Kepala Batas",
+    "slug": "kedah_sg_padang_terap_di_kepala_batas",
+    "lat": 6.202699,
+    "lon": 100.41225,
+    "col_idx": 5,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Sintok di UUM Sintok",
+    "slug": "kedah_sg_sintok_di_uum_sintok",
+    "lat": 6.472056,
+    "lon": 100.50325,
+    "col_idx": 7,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Temin di Kg. Jeragan",
+    "slug": "kedah_sg_temin_di_kg_jeragan",
+    "lat": 6.395,
+    "lon": 100.443733,
+    "col_idx": 9,
+    "river": "kedah"
+  },
+  {
+    "name": "Felcra Sebapin",
+    "slug": "kedah_felcra_sebapin",
+    "lat": 6.408625,
+    "lon": 100.58626,
+    "col_idx": 11,
+    "river": "kedah"
+  },
+  {
+    "name": "Sek. Keb. Lamdin",
+    "slug": "kedah_sek_keb_lamdin",
+    "lat": 6.100637,
+    "lon": 100.687846,
+    "col_idx": 13,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Durian Burung di Durian Burung",
+    "slug": "kedah_sg_durian_burung_di_durian_burung",
+    "lat": 6.376555,
+    "lon": 100.697778,
+    "col_idx": 15,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Padang Sanai di Padang Sanai",
+    "slug": "kedah_sg_padang_sanai_di_padang_sanai",
+    "lat": 6.341738,
+    "lon": 100.688201,
+    "col_idx": 17,
+    "river": "kedah"
+  },
+  {
+    "name": "Sg. Sari di Kilang Gula Padang Terap",
+    "slug": "kedah_sg_sari_di_kilang_gula_padang_terap",
+    "lat": 6.312686,
+    "lon": 100.664531,
+    "col_idx": 19,
+    "river": "kedah"
+  },
+  {
+    "name": "Sek. Keb. Kampung Bukit",
+    "slug": "kedah_sek_keb_kampung_bukit",
+    "lat": 6.141896,
+    "lon": 100.614862,
+    "col_idx": 21,
+    "river": "kedah"
+  },
+  {
+    "name": "Genting Sempah",
+    "slug": "klang_genting_sempah",
+    "lat": 3.37576,
+    "lon": 101.77462,
+    "col_idx": 1,
+    "river": "klang"
+  },
+  {
+    "name": "Empangan Batu",
+    "slug": "klang_empangan_batu",
+    "lat": 3.27245,
+    "lon": 101.687767,
+    "col_idx": 3,
+    "river": "klang"
+  },
+  {
+    "name": "Empangan Klang Gates",
+    "slug": "klang_empangan_klang_gates",
+    "lat": 3.235451,
+    "lon": 101.750373,
+    "col_idx": 5,
+    "river": "klang"
+  },
+  {
+    "name": "Gombak Simpang 3",
+    "slug": "klang_gombak_simpang_3",
+    "lat": 3.24517,
+    "lon": 101.71384,
+    "col_idx": 7,
+    "river": "klang"
+  },
+  {
+    "name": "Kg. Sg. Tua (Empangan Batu)",
+    "slug": "klang_kg_sg_tua_empangan_batu",
+    "lat": 3.275939,
+    "lon": 101.684242,
+    "col_idx": 9,
+    "river": "klang"
+  },
+  {
+    "name": "Lembah Jaya",
+    "slug": "klang_lembah_jaya",
+    "lat": 3.14485,
+    "lon": 101.78825,
+    "col_idx": 11,
+    "river": "klang"
+  },
+  {
+    "name": "Pandan Indah",
+    "slug": "klang_pandan_indah",
+    "lat": 3.127278,
+    "lon": 101.75117,
+    "col_idx": 13,
+    "river": "klang"
+  },
+  {
+    "name": "JPS Ampang",
+    "slug": "klang_jps_ampang",
+    "lat": 3.15489,
+    "lon": 101.74867,
+    "col_idx": 15,
+    "river": "klang"
+  },
+  {
+    "name": "JPS Wilayah",
+    "slug": "klang_jps_wilayah",
+    "lat": 3.155556,
+    "lon": 101.681944,
+    "col_idx": 17,
+    "river": "klang"
+  },
+  {
+    "name": "Kg. Berembang (SMART)",
+    "slug": "klang_kg_berembang_smart",
+    "lat": 3.165903,
+    "lon": 101.739969,
+    "col_idx": 19,
+    "river": "klang"
+  },
+  {
+    "name": "Kolam Takungan Batu",
+    "slug": "klang_kolam_takungan_batu",
+    "lat": 3.2185,
+    "lon": 101.68189,
+    "col_idx": 21,
+    "river": "klang"
+  },
+  {
+    "name": "Ladang Edinburgh",
+    "slug": "klang_ladang_edinburgh",
+    "lat": 3.184444,
+    "lon": 101.63289,
+    "col_idx": 23,
+    "river": "klang"
+  },
+  {
+    "name": "Sg. Bunus di Jln. Tun Razak",
+    "slug": "klang_sg_bunus_di_jln_tun_razak",
+    "lat": 3.16952,
+    "lon": 101.71169,
+    "col_idx": 25,
+    "river": "klang"
+  },
+  {
+    "name": "Sg. Kerayong di Kg. Cheras Baru",
+    "slug": "klang_sg_kerayong_di_kg_cheras_baru",
+    "lat": 3.109931,
+    "lon": 101.746,
+    "col_idx": 27,
+    "river": "klang"
+  },
+  {
+    "name": "Sg. Klang di Jambatan Petaling",
+    "slug": "klang_sg_klang_di_jambatan_petaling",
+    "lat": 3.080844,
+    "lon": 101.66376,
+    "col_idx": 29,
+    "river": "klang"
+  },
+  {
+    "name": "Sg. Klang di Kg. Berembang",
+    "slug": "klang_sg_klang_di_kg_berembang",
+    "lat": 3.16589,
+    "lon": 101.74,
+    "col_idx": 31,
+    "river": "klang"
+  },
+  {
+    "name": "Sg. Klang di Leboh Pasar",
+    "slug": "klang_sg_klang_di_leboh_pasar",
+    "lat": 3.147096,
+    "lon": 101.69541,
+    "col_idx": 33,
+    "river": "klang"
+  },
+  {
+    "name": "Sg. Klang di Lembah Keramat",
+    "slug": "klang_sg_klang_di_lembah_keramat",
+    "lat": 3.1838,
+    "lon": 101.76048,
+    "col_idx": 35,
+    "river": "klang"
+  },
+  {
+    "name": "Taman Ehsan",
+    "slug": "klang_taman_ehsan",
+    "lat": 3.21828,
+    "lon": 101.63134,
+    "col_idx": 37,
+    "river": "klang"
+  }
+]
