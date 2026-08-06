@@ -5,7 +5,7 @@
 **Author:** Arinn Danish  
 **Date:** July 2026  
 **Frameworks:** TensorFlow 2.21.0 / Keras 3.15.0 *(deep learning libraries used for model building and training)*; PyTorch *(an alternative deep learning library, used for the Phase 1 baseline)*  
-**Status:** Phase 3 complete; Optuna HPO complete; Phase 4 GAN imputation complete; Phase 4 prediction models complete (XGBoost Hurdle + monthly direct model); **Phase 5 TCN + improved monthly model complete — Sg. Cherating monthly R² = 81.7% (>80% target achieved)**
+**Status:** Phase 3 complete; Optuna HPO complete; Phase 4 GAN imputation complete; Phase 4 prediction models complete (XGBoost Hurdle + monthly direct model); Phase 5 TCN + improved monthly model complete — Sg. Cherating monthly R² = 81.7% (>80% target achieved); **Phase 6 multi-river extension complete — Johor/Kedah/Klang/Kuantan monthly predictions; Klang TCN+Ridge hybrid R² = 62.8%**
 
 ---
 
@@ -1133,6 +1133,98 @@ def pinball_loss(quantile):
 | `predictions/phase4_monthly_v2_results.json` | Direct monthly model results (ERA5 aggregates) | **Complete** |
 | `predictions/phase4_monthly_v2_predictions.csv` | Monthly predictions, 3 active stations, 19 test months | **Complete** |
 | `predictions/phase4_best_results.json` | **Consolidated best R² per station and scale** | **Complete** |
+
+### Phase 6 Artifacts
+
+| Artifact | Description | Status |
+|---|---|---|
+| `scripts/phase6_tcn_ridge_hybrid.py` | TCN backbone + per-station RidgeCV hybrid (main Phase 6 script) | **Complete** |
+| `scripts/phase6_dualpath_tcn.py` | Dual-path TCN (linear + TCN residual) — archived, all negative R² | **Complete** |
+| `predictions/phase6_ridge_allrivers_results.json` | Phase 6 Ridge baseline — all 4 rivers, per-station R² | **Complete** |
+| `predictions/phase6_tcn_ridge_hybrid_results.json` | TCN+Ridge hybrid results — all 4 rivers, 53 stations | **Complete** |
+| `predictions/phase6_tcn_ridge_hybrid_predictions.csv` | Per-station monthly test predictions (TCN+Ridge hybrid) | **Complete** |
+| `predictions/phase6_dualpath_tcn_results.json` | Dual-path TCN results — archived reference | **Complete** |
+
+---
+
+### 8.12 Phase 6 — Multi-River Extension (Johor, Kedah, Klang, Kuantan)
+
+Phase 6 extends the monthly prediction pipeline from the 5-station Kuantan catchment to **four additional river systems**: Sg. Johor (18 stations), Sg. Kedah (11 stations), Sg. Klang (19 stations), and Sg. Kuantan (5 stations). The ERA5 data for these rivers was extracted from `era5_all_rivers_mapped.csv` (Johor, Kedah, Klang) and the existing `era5_kuantan_station_mapped.csv` (Kuantan), aggregated to monthly resolution with `tp` columns summed and all other variables averaged.
+
+#### 8.12.1 Phase 6 Ridge Baseline
+
+A per-station RidgeCV model with 15 ERA5 features (8 own-grid + log_tp + 4 seasonals + lag1 + log_lag1) was trained on real (non-imputed) monthly observations, using the same train/test split as Phase 5 (train ≤ 2024-04, test 2024-05 → 2025-12).
+
+**River-level summary (best station per river):**
+
+| River | Best station | Best R² | Stations ≥0% | Stations ≥50% | Stations ≥80% |
+|---|---|---|---|---|---|
+| Johor | johor_lepau | **34.0%** | 4/15 | 0 | 0 |
+| Kedah | kedah_sg_sintok | **50.7%** | 4/11 | 1 | 0 |
+| Klang | klang_sg_klang_di_jambatan_petaling | **18.9%** | 2/18 | 0 | 0 |
+| Kuantan | kuantan_sg_cherating | **80.7%** | 3/3 | 2 | 1 |
+
+**Key observation:** Kuantan's exceptional performance (all 3 active stations positive, sg_cherating at 80.7%) reflects the northeast monsoon signal that ERA5 captures well for the Pahang east coast. The Klang river system (urban Kuala Lumpur basin) is structurally harder: urban heat island effects and complex terrain in the Titiwangsa range produce localised convective triggering that ERA5's 0.25° resolution cannot resolve.
+
+#### 8.12.2 Phase 6 TCN Backbone + Ridge Head Hybrid
+
+A TensorFlow TCN backbone (2 causal conv blocks, 8 filters, dilations 1 and 2, LayerNorm) was pre-trained pooled per river on 6-month rolling sequences (T_PAST=6), then used as a feature extractor. The backbone output (16-dim pooled embedding from GlobalAvgPool + GlobalMaxPool concatenation) was concatenated with 24 current-month features (own ERA5 × 8 + river-mean ERA5 × 8 + log_tp × 2 + 4 seasonals + lag1 + log_lag1) to form a 40-dimensional input for per-station RidgeCV.
+
+**Architecture details:**
+
+```
+Input: (batch, 6, 24)  ← 6-month sequences of 24 ERA5 features
+→ Conv1D(8, 3, causal, dilation=1) + LayerNorm + Residual(Conv1D(8, 1))
+→ Conv1D(8, 3, causal, dilation=2) + LayerNorm
+→ GlobalAvgPool1D ‖ GlobalMaxPool1D  → 16-dim embedding
+Pre-training: pooled across all river stations, 80 epochs, CosineDecay LR
+
+Ridge head per station:
+→ Z = [16-dim TCN embedding ‖ 24-dim current-month features]  →  RidgeCV(αs=[0.1…100], cv=5)
+```
+
+**Data note:** Unlike the Phase 6 Ridge baseline (real observations only), the TCN hybrid trains on all monthly rows from the imputed CSVs (N_tr=102 for Johor/Kedah/Klang stations, N_tr=46–47 for Kuantan stations). Stations evaluated against test months from the imputed CSV — this makes direct comparison with the Ridge baseline approximate for stations where imputation quality is low.
+
+**Results vs Phase 6 Ridge baseline:**
+
+| River | Best station (hybrid) | TCN hybrid R² | Phase 6 Ridge R² | Change |
+|---|---|---|---|---|
+| Johor | johor_lepau | 17.9% | 34.0% | −16.1pp |
+| Kedah | kedah_sg_temin | **51.9%** | 50.7% (sg_sintok) | +1.2pp on river peak |
+| Klang | klang_sg_klang_di_kg_berembang | **62.8%** | 18.9% | **+43.9pp** |
+| Kuantan | kuantan_sg_belat | 45.3% | 80.7% (sg_cherating) | −35.4pp on benchmark |
+
+Kedah sg_sintok (Phase 6 Ridge benchmark) falls to 17.9% under the hybrid — the TCN backbone dilutes the clean Ridge signal that the 15-feature model captured for that station. Kedah sg_temin reaches 51.9% but this station had insufficient real observations for the Phase 6 Ridge baseline, making it a different comparison.
+
+**Klang result (+43.9pp):** The urban Klang basin benefits most from the TCN backbone. With 19 stations sharing a common ERA5 grid region, the pooled backbone (102 × 19 = 1,938 training sequences) learns a shared temporal pattern across the basin. The 16-dim embedding captures basin-level temporal context that the 15-feature Ridge model cannot access from the current month alone. `klang_sg_klang_di_kg_berembang` achieves R²=62.8%, r=0.821 — a strong result for an urban tropical station.
+
+**Kuantan degradation:** Kuantan has only 233 pooled training sequences (5 stations × 47 months), making the TCN backbone undertrained. More critically, two Kuantan stations (felda_panching, komtur) have been offline since ~2024 — their "test" data in the imputed CSV consists of GAN-generated values, not real observations. When the model's predictions are evaluated against these imputed actuals, the residuals bear no physical meaning, producing catastrophic R² (felda_panching: −1.5×10¹⁴). Filtering these stations out leaves kuantan_sg_cherating at −4.0% in the hybrid vs 80.7% in Phase 6 Ridge — the 5-station pooled backbone cannot learn sg_cherating's specific northeast monsoon patterns.
+
+#### 8.12.3 Summary — Phase 6 Model Selection
+
+For the final Phase 6 deliverable, the recommended per-river model is:
+
+| River | Recommended model | Best station R² | Rationale |
+|---|---|---|---|
+| Johor | Phase 6 Ridge (15-feat) | 34.0% (lepau) | TCN hybrid degraded all Johor stations |
+| Kedah | Phase 6 Ridge (15-feat) | 50.7% (sg_sintok) | TCN hybrid improves sg_temin but degrades sg_sintok benchmark |
+| Klang | TCN+Ridge hybrid | **62.8%** (kg_berembang) | +43.9pp improvement; large pooled dataset enables meaningful TCN learning |
+| Kuantan | Phase 6 Ridge / Phase 5 | **80.7%** (sg_cherating) | TCN hybrid degrades sg_cherating due to offline station contamination |
+
+#### 8.12.4 Pure TCN Experiments (Phase 6, All Failed)
+
+Six end-to-end TCN variants were evaluated before arriving at the backbone+Ridge hybrid:
+
+| Variant | Architecture | Result |
+|---|---|---|
+| Phase 5 Kuantan TCN | 64 filters, 4 blocks, GlobalAvgPool + Ridge head | R²=71.8% (vs Ridge 81.7%) |
+| TCN v2 (all rivers pooled) | Same, all-river pooling | Negative R² all rivers |
+| TCN v3 (per-station scaler) | Per-station StandardScaler | Negative R² all stations |
+| TCN attention | TCN + MultiHeadAttention | Killed (>15 min CPU; MHA too slow without GPU) |
+| Dual-path TCN | Linear Dense(1) + TCN residual | r=0.72 but R²=−577% (scale error; coupled optimisation prevents linear path converging) |
+| Dual-path per-station | Same, one model per station | All negative R² (N=20–100 per station) |
+
+All pure TCN failures share the same root cause: **insufficient training samples per station** (20–100 months) relative to TCN parameter count (1,000–2,000 parameters). With fewer than ~150 real samples per station, TCNs reliably underperform Ridge regression on monthly tropical rainfall. The backbone+Ridge hybrid avoids this by separating temporal feature extraction (pooled, 200–2,000 sequences) from calibrated prediction (Ridge, per-station, closed-form).
 
 ---
 
