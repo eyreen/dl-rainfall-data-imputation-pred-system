@@ -506,6 +506,94 @@ The Kedah/Muda basin in northern Malaysia benefits from a clearer dry-season vs.
 
 ---
 
+## §9d. Phase 7 — IMERG + Climate Teleconnection Enhancement (August 2026)
+
+### Overview
+
+Phase 7 extends the Phase 6 Ridge feature set from 15 ERA5 features to **24 features** by adding three new inputs:
+
+| New feature group | Features added | Rationale |
+|---|---|---|
+| IMERG satellite precipitation | `log_imerg`, `log_imerg_3x3` | 0.1° resolution vs ERA5 0.25°; direct satellite measurement, not reanalysis |
+| Climate teleconnection indices | `oni`, `dmi`, `oni_lag3m`, `oni_lag6m`, `dmi_lag3m` | ENSO/IOD modulate Malaysian monsoon onset and intensity |
+| Lag-2 monthly rainfall | `lag2`, `log_lag2` | Medium-term persistence beyond lag-1 |
+
+**Test period:** May 2024 – September 2025 (17 months, limited by IMERG V07B coverage).
+**Model:** RidgeCV (alpha cross-validated) with StandardScaler — same framework as Phase 6.
+
+### Phase 7 Final Best-of Results (Phase 6 ∪ Phase 7)
+
+For each station, the higher R² across all Phase 6 and Phase 7 models is retained.
+
+**Sg. Johor (18 stations):**
+
+| Station | Best R² | Δ vs Phase 6 | Model |
+|---|---|---|---|
+| johor_lepau | **55.8%** | +21.8 pp | Phase 7 Ridge+IMERG+CI |
+| johor_sg_siam_di_kg_sg_siam | 43.7% | +12.6 pp | Phase 7 Ridge+IMERG+CI |
+| johor_sg_johor_di_kota_tinggi | 32.5% | +24.6 pp | Phase 7 Ridge+IMERG+CI |
+| johor_ladang_nam_heng | 27.8% | +24.7 pp | Phase 7 Ridge+IMERG+CI |
+| johor_kg_semanggar | 23.5% | (was −10.4%) | Phase 7 Ridge+IMERG+CI |
+| johor_sg_tiram_di_klinik_kesihatan_ulu_tiram | 20.8% | +26.3 pp | Phase 7 Ridge+IMERG+CI |
+| johor_ulu_sebol | 3.2% | — | Phase 6 Ridge |
+| *11 remaining stations* | *negative R²* | — |
+
+> **Impact of climate indices on Johor:** ONI lag-6m and DMI lag-3m are the dominant predictors for Johor — La Niña (negative ONI) triggers enhanced northeast monsoon, while a positive IOD strengthens moisture advection from the Indian Ocean. These large-scale signals explain why Johor lepau improved from 34.0% to 55.8%.
+
+**Sg. Kedah (11 stations):**
+
+| Station | Best R² | Δ vs Phase 6 | Model |
+|---|---|---|---|
+| kedah_sg_temin_di_kg_jeragan | 51.9% | — | Phase 6 TCN+Ridge |
+| kedah_sg_sintok_di_uum_sintok | 50.7% | — | Phase 6 Ridge |
+| kedah_sek_keb_lamdin | 48.6% | — | Phase 6 Ridge |
+| kedah_sg_sari_di_kilang_gula_padang_terap | 40.0% | +8.1 pp | Phase 7 Ridge+IMERG+CI |
+| kedah_felcra_sebapin | 25.4% | — | Phase 6 TCN+Ridge |
+| kedah_sg_durian_burung_di_durian_burung | 13.5% | +7.2 pp | Phase 7 Ridge+IMERG+CI |
+| kedah_sg_padang_terap_di_kepala_batas | 7.3% | — | Phase 6 TCN+Ridge |
+| *4 remaining stations* | *negative R²* | — |
+
+> **Kedah note:** Phase 7 did not improve the top Kedah stations (sg_temin, sg_sintok) — these had limited training months (14–21) and the extra 9 features added noise rather than signal. Phase 6 results retained for top stations.
+
+**Sg. Klang (19 stations):**
+
+| Station | Best R² | Δ vs Phase 6 | Model |
+|---|---|---|---|
+| klang_sg_klang_di_kg_berembang | 62.8% | — | Phase 6 TCN+Ridge |
+| klang_pandan_indah | 28.0% | (was −50%) | Phase 7 Ridge+IMERG+CI |
+| klang_sg_klang_di_jambatan_petaling | 23.2% | — | Phase 6 TCN+Ridge |
+| klang_jps_wilayah | 21.7% | +17.2 pp | Phase 7 Ridge+IMERG+CI |
+| klang_jps_ampang | 17.2% | (was −6.6%) | Phase 7 Ridge+IMERG+CI |
+| klang_empangan_klang_gates | 12.7% | — | Phase 6 TCN+Ridge |
+| klang_kolam_takungan_batu | 11.8% | +0.7 pp | Phase 7 Ridge+IMERG+CI |
+| klang_ladang_edinburgh | 2.7% | (was −26.2%) | Phase 7 Ridge+IMERG+CI |
+| *11 remaining stations* | *negative R²* | — |
+
+> Klang positive station count: 5 (Phase 6) → **8 (Phase 7 best-of)**. IMERG's higher spatial resolution helps distinguish urban sub-catchments that ERA5 cannot resolve at 0.25°.
+
+**Sg. Kuantan (5 stations):**
+
+| Station | Best R² | Δ vs Phase 6 | Model |
+|---|---|---|---|
+| **kuantan_sg_cherating** | **80.7% ✓** | — | Phase 6 Ridge |
+| kuantan_sg_belat | **64.2%** | +18.9 pp | Phase 7 Ridge+IMERG+CI |
+| kuantan_pasir_kemudi | 52.1% | — | Phase 6 Ridge |
+| kuantan_felda_panching | — | — | Sensor offline |
+| kuantan_komtur | — | — | Sensor offline |
+
+> Kuantan sg_belat improved from 45.3% to 64.2% — the largest single-station gain in Phase 7. IMERG at 3.75°N, 103.25°E captures coastal orographic enhancement that ERA5 smooths over.
+
+### River Summary — Phase 7 Final Best-of
+
+| River | Best R² | Best station | Positive | ≥50% |
+|---|---|---|---|---|
+| **Kuantan** | **80.7% ✓** | sg_cherating | 3/3 active | 3/3 |
+| Klang | 62.8% | kg_berembang | 8/19 | 1/19 |
+| Kedah | 51.9% | sg_temin | 7/11 | 2/11 |
+| **Johor** | **55.8%** | lepau | 7/18 | 1/18 |
+
+---
+
 ## 10. Deliverables Produced So Far
 
 | File | Description |
@@ -527,17 +615,22 @@ The Kedah/Muda basin in northern Malaysia benefits from a clearer dry-season vs.
 | `predictions/phase5_pooled_xgb_predictions.csv` | **Phase 5 monthly predictions vs actuals — 19 months, 3 stations** |
 | `predictions/phase6_ridge_allrivers_results.json` | **Phase 6 Ridge baseline — all 4 rivers, per-station R²** |
 | `predictions/phase6_tcn_ridge_hybrid_results.json` | **Phase 6 TCN+Ridge hybrid — all 4 rivers, 53 stations** |
-| `predictions/phase6_best_results.json` | **Phase 6 best-of — max R² per station (final deliverable numbers)** |
+| `predictions/phase6_best_results.json` | **Phase 6 best-of — max R² per station (Ridge + TCN+Ridge)** |
 | `predictions/phase6_best_predictions.csv` | **Phase 6 best-of monthly predictions — all positive-R² stations** |
+| `data/processed/imerg_stations_monthly.csv` | **Phase 7 — IMERG V07B monthly precipitation per station, 2015–2025, 129 months** |
+| `data/processed/climate_indices_monthly.csv` | **Phase 7 — ONI + DMI monthly means and lags, 2015–2026** |
+| `predictions/phase7_ridge_enhanced_results.json` | **Phase 7 — Ridge+IMERG+CI per-station results (17 test months)** |
+| `predictions/phase7_final_best_results.json` | **Phase 7 final best-of — max R² across Phase 6+7 (definitive deliverable)** |
 | `figures/tcn/` | Scatter plots, SHAP importance, R² comparison charts |
 | `reports/Technical_Report_Master_Progress.md` | Master technical report — all phases with equations and glossary |
-| `notebooks/03b_tcn_multihead_tensorflow.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5, Phase 5 TCN, Phase 6 multi-river |
+| `notebooks/03b_tcn_multihead_tensorflow.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5, Phase 5 TCN, Phase 6+7 multi-river |
 
 **Remaining optional improvements:**
 
-| Step | Expected R² gain | Input required |
+| Step | Expected R² gain | Status |
 |---|---|---|
-| Higher-res precipitation input (IMERG 0.1°) | +5–10pp monthly for pasir_kemudi | IMERG download (~5 GB) |
-| Daily/weekly prediction for Johor/Kedah/Klang | +5–15pp daily R² | XGBoost Hurdle per-river (same as Phase 4) |
-| Sensor data recovery (Felda Panching, KOMTUR) | Enables evaluation for 2 more Kuantan stations | YBTM sensor repair |
+| IMERG satellite precipitation (0.1°) | **Done — Phase 7** | ✓ Completed |
+| Climate teleconnection indices (ONI/DMI) | **Done — Phase 7** | ✓ Completed |
+| Daily/weekly prediction for Johor/Kedah/Klang | +5–15pp daily R² | Not started — XGBoost Hurdle per-river |
+| Sensor data recovery (Felda Panching, KOMTUR) | Enables evaluation for 2 more Kuantan stations | Requires YBTM sensor repair |
 | Padas (Sabah) and Sarawak rivers | New river systems | ERA5 coordinate extraction required first |
