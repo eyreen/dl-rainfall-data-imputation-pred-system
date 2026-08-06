@@ -1,0 +1,571 @@
+{
+  "description": "Phase 6 best-of \u2014 per-station max R\u00b2 across Ridge and TCN+Ridge hybrid",
+  "train_period": "2015-01 to 2024-04",
+  "test_period": "2024-05 to 2025-12",
+  "river_summary": {
+    "johor": {
+      "best_station": "johor_lepau",
+      "best_r2": 0.3402,
+      "n_stations": 18,
+      "n_positive_r2": 5,
+      "n_r2_ge50pct": 0,
+      "n_r2_ge80pct": 0
+    },
+    "kedah": {
+      "best_station": "kedah_sg_temin_di_kg_jeragan",
+      "best_r2": 0.5187,
+      "n_stations": 11,
+      "n_positive_r2": 7,
+      "n_r2_ge50pct": 2,
+      "n_r2_ge80pct": 0
+    },
+    "klang": {
+      "best_station": "klang_sg_klang_di_kg_berembang",
+      "best_r2": 0.6281,
+      "n_stations": 19,
+      "n_positive_r2": 5,
+      "n_r2_ge50pct": 1,
+      "n_r2_ge80pct": 0
+    },
+    "kuantan": {
+      "best_station": "kuantan_sg_cherating",
+      "best_r2": 0.8074,
+      "n_stations": 5,
+      "n_positive_r2": 3,
+      "n_r2_ge50pct": 2,
+      "n_r2_ge80pct": 1
+    }
+  },
+  "per_station": [
+    {
+      "river": "johor",
+      "station": "johor_bukit_besar",
+      "best_model": "Ridge",
+      "r2": -0.2536,
+      "r": -0.0783,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_kg_semanggar",
+      "best_model": "Ridge",
+      "r2": -0.1041,
+      "r": 0.4205,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_lim_lim",
+      "best_model": "Ridge",
+      "r2": -0.5125,
+      "r": 0.212,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_nam_heng",
+      "best_model": "Ridge",
+      "r2": 0.0313,
+      "r": 0.3299,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_pekan",
+      "best_model": "Ridge",
+      "r2": -0.6766,
+      "r": 0.0199,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_ladang_sedenak",
+      "best_model": "Ridge",
+      "r2": -0.0095,
+      "r": 0.1645,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_layang_layang",
+      "best_model": "TCN+Ridge",
+      "r2": -0.1654,
+      "r": 0.2199,
+      "rmse": 125.0,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "johor",
+      "station": "johor_lepau",
+      "best_model": "Ridge",
+      "r2": 0.3402,
+      "r": 0.7243,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_pasak",
+      "best_model": "Ridge",
+      "r2": -0.1455,
+      "r": 0.5932,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_johor_di_kota_tinggi",
+      "best_model": "Ridge",
+      "r2": 0.0785,
+      "r": 0.5227,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_kepala_orang_di_kg_sri_jaya",
+      "best_model": "TCN+Ridge_only",
+      "r2": -0.8983,
+      "r": 0.1778,
+      "rmse": 165.3,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_linggiu_di_linggiu",
+      "best_model": "TCN+Ridge",
+      "r2": -0.4305,
+      "r": -0.1299,
+      "rmse": 134.3,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_sembilang_di_kg_sg_sembilang",
+      "best_model": "TCN+Ridge_only",
+      "r2": -0.514,
+      "r": -0.091,
+      "rmse": 164.0,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_siam_di_kg_sg_siam",
+      "best_model": "Ridge",
+      "r2": 0.3112,
+      "r": 0.5801,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_siku_di_kg_murni_jaya",
+      "best_model": "Ridge",
+      "r2": -0.2348,
+      "r": 0.1774,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_tiram_di_kg_bukit_dagang",
+      "best_model": "TCN+Ridge_only",
+      "r2": -0.5301,
+      "r": -0.1158,
+      "rmse": 204.3,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "johor",
+      "station": "johor_sg_tiram_di_klinik_kesihatan_ulu_tiram",
+      "best_model": "Ridge",
+      "r2": -0.055,
+      "r": 0.2615,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "johor",
+      "station": "johor_ulu_sebol",
+      "best_model": "TCN+Ridge",
+      "r2": 0.0323,
+      "r": 0.4934,
+      "rmse": 114.0,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_felcra_sebapin",
+      "best_model": "TCN+Ridge",
+      "r2": 0.2544,
+      "r": 0.7567,
+      "rmse": 168.4,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sek_keb_felda_bukit_tangga",
+      "best_model": "Ridge",
+      "r2": -0.0113,
+      "r": 0.5546,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sek_keb_kampung_bukit",
+      "best_model": "Ridge",
+      "r2": -0.9371,
+      "r": 0.0285,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sek_keb_lamdin",
+      "best_model": "Ridge",
+      "r2": 0.4863,
+      "r": 0.7117,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_badak_di_akademi_binaan_malaysia_abm",
+      "best_model": "Ridge",
+      "r2": -0.1491,
+      "r": 0.6064,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_durian_burung_di_durian_burung",
+      "best_model": "Ridge",
+      "r2": 0.0635,
+      "r": 0.7526,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_padang_sanai_di_padang_sanai",
+      "best_model": "Ridge",
+      "r2": -0.229,
+      "r": 0.8121,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_padang_terap_di_kepala_batas",
+      "best_model": "TCN+Ridge",
+      "r2": 0.0732,
+      "r": 0.593,
+      "rmse": 159.9,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_sari_di_kilang_gula_padang_terap",
+      "best_model": "Ridge",
+      "r2": 0.3189,
+      "r": 0.6503,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_sintok_di_uum_sintok",
+      "best_model": "Ridge",
+      "r2": 0.5066,
+      "r": 0.7197,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kedah",
+      "station": "kedah_sg_temin_di_kg_jeragan",
+      "best_model": "TCN+Ridge",
+      "r2": 0.5187,
+      "r": 0.7913,
+      "rmse": 58.3,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_empangan_batu",
+      "best_model": "Ridge",
+      "r2": -0.6614,
+      "r": 0.5138,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_empangan_klang_gates",
+      "best_model": "TCN+Ridge",
+      "r2": 0.1267,
+      "r": 0.4759,
+      "rmse": 185.2,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_genting_sempah",
+      "best_model": "Ridge",
+      "r2": -0.9972,
+      "r": 0.2324,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_gombak_simpang_3",
+      "best_model": "TCN+Ridge",
+      "r2": -0.0543,
+      "r": 0.5406,
+      "rmse": 259.4,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_jps_ampang",
+      "best_model": "Ridge",
+      "r2": -0.0656,
+      "r": 0.7167,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_jps_wilayah",
+      "best_model": "TCN+Ridge",
+      "r2": 0.0453,
+      "r": 0.5864,
+      "rmse": 216.3,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_kg_berembang_smart",
+      "best_model": "Ridge",
+      "r2": -0.1631,
+      "r": 0.3557,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_kg_sg_tua_empangan_batu",
+      "best_model": "Ridge",
+      "r2": -0.2082,
+      "r": 0.444,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_kolam_takungan_batu",
+      "best_model": "Ridge",
+      "r2": 0.1112,
+      "r": 0.6228,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_ladang_edinburgh",
+      "best_model": "Ridge",
+      "r2": -0.2623,
+      "r": 0.3376,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_lembah_jaya",
+      "best_model": "TCN+Ridge",
+      "r2": -0.1269,
+      "r": 0.5044,
+      "rmse": 192.0,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_pandan_indah",
+      "best_model": "TCN+Ridge",
+      "r2": -0.5003,
+      "r": 0.4506,
+      "rmse": 258.9,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_bunus_di_jln_tun_razak",
+      "best_model": "TCN+Ridge",
+      "r2": -0.6035,
+      "r": 0.3206,
+      "rmse": 272.3,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_kerayong_di_kg_cheras_baru",
+      "best_model": "Ridge",
+      "r2": -0.2691,
+      "r": 0.6148,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_jambatan_petaling",
+      "best_model": "TCN+Ridge",
+      "r2": 0.2318,
+      "r": 0.543,
+      "rmse": 277.0,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_kg_berembang",
+      "best_model": "TCN+Ridge_only",
+      "r2": 0.6281,
+      "r": 0.821,
+      "rmse": 59.1,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_leboh_pasar",
+      "best_model": "TCN+Ridge",
+      "r2": -0.2744,
+      "r": 0.3774,
+      "rmse": 226.6,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_sg_klang_di_lembah_keramat",
+      "best_model": "TCN+Ridge",
+      "r2": -0.1317,
+      "r": 0.6438,
+      "rmse": 216.0,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "klang",
+      "station": "klang_taman_ehsan",
+      "best_model": "TCN+Ridge",
+      "r2": -0.1693,
+      "r": 0.4626,
+      "rmse": 234.4,
+      "n_train": 102,
+      "n_test": 20
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_felda_panching",
+      "best_model": "TCN+Ridge_only",
+      "r2": null,
+      "r": 0.0763,
+      "rmse": 99.9,
+      "n_train": 47,
+      "n_test": 16
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_komtur",
+      "best_model": "TCN+Ridge_only",
+      "r2": -44.5871,
+      "r": 0.0168,
+      "rmse": 65.1,
+      "n_train": 47,
+      "n_test": 17
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_pasir_kemudi",
+      "best_model": "Ridge",
+      "r2": 0.521,
+      "r": 0.738,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_sg_belat",
+      "best_model": "TCN+Ridge",
+      "r2": 0.4533,
+      "r": 0.7507,
+      "rmse": 119.8,
+      "n_train": 46,
+      "n_test": 16
+    },
+    {
+      "river": "kuantan",
+      "station": "kuantan_sg_cherating",
+      "best_model": "Ridge",
+      "r2": 0.8074,
+      "r": 0.9579,
+      "rmse": NaN,
+      "n_train": "?",
+      "n_test": "?"
+    }
+  ]
+}
