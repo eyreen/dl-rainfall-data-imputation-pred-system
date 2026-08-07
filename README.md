@@ -16,7 +16,7 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 |---|---|---|---|
 | 1 — Data Engineering | `01_e2e_data_engineering.ipynb` | EDA, gap detection, feature engineering | Clean dataset, gap map |
 | 2 — GAN Imputation | `02b_gan_cnn_tensorflow.ipynb` | GAIN (GAN) with CNN generator, 5-seed ensemble | R²=+0.179, mean bias <2% |
-| 3 — TCN Prediction | `03b_tcn_multihead_tensorflow.ipynb` | Multi-head Hurdle TCN + ERA5, 3-seed ensemble | Weekly R²=+0.075 (best) |
+| 3–7 — Prediction Pipeline | `03b_prediction_pipeline_phases3to7.ipynb` | Multi-head Hurdle TCN · XGBoost Hurdle · Ridge · TCN+Ridge · Ridge+IMERG+CI | Monthly R²=80.7% (Kuantan, Phase 6–7) |
 
 ## Architecture
 
@@ -57,7 +57,7 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 ├── notebooks/
 │   ├── 01_e2e_data_engineering.ipynb
 │   ├── 02b_gan_cnn_tensorflow.ipynb
-│   ├── 03b_tcn_multihead_tensorflow.ipynb
+│   ├── 03b_prediction_pipeline_phases3to7.ipynb
 │   └── archive/          # superseded notebook versions
 ├── data/
 │   ├── raw/              # original telemetry exports

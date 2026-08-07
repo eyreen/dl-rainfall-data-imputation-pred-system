@@ -1112,7 +1112,7 @@ def pinball_loss(quantile):
 | `figures/tcn/hurdle_scatter_monthly.png` | Hurdle TCN — monthly scatter, 3 stations |
 | `figures/tcn/era5_scatter_daily.png` | ERA5+Hurdle — daily scatter, 3 stations |
 | `figures/tcn/era5_scatter_monthly.png` | ERA5+Hurdle — monthly scatter, 3 stations |
-| `notebooks/03b_tcn_multihead_tensorflow.ipynb` | Reproducible notebook: all sections — multi-head, SHAP, hurdle, ERA5 |
+| `notebooks/03b_prediction_pipeline_phases3to7.ipynb` | Reproducible notebook: all sections — multi-head, SHAP, hurdle, ERA5, Phase 5 dual-grid, Phase 6 multi-river, Phase 7 IMERG+CI |
 | `reports/Technical_Report_01_Data_Engineering.md` | Phase 1 full technical report |
 | `reports/Technical_Report_02_GAN_Imputation.md` | Phase 2 full technical report |
 | `reports/Technical_Report_03_TCN_Prediction.md` | Phase 3 full technical report (all TCN variants) |

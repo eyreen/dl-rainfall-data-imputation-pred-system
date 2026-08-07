@@ -623,7 +623,7 @@ For each station, the higher R² across all Phase 6 and Phase 7 models is retain
 | `predictions/phase7_final_best_results.json` | **Phase 7 final best-of — max R² across Phase 6+7 (definitive deliverable)** |
 | `figures/tcn/` | Scatter plots, SHAP importance, R² comparison charts |
 | `reports/Technical_Report_Master_Progress.md` | Master technical report — all phases with equations and glossary |
-| `notebooks/03b_tcn_multihead_tensorflow.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5, Phase 5 TCN, Phase 6+7 multi-river |
+| `notebooks/03b_prediction_pipeline_phases3to7.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5, Phase 5 dual-grid, Phase 6+7 multi-river (53 stations) |
 
 **Remaining optional improvements:**
 

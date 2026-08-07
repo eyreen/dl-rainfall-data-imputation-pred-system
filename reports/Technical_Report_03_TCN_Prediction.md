@@ -4,7 +4,7 @@
 **Project:** Deep Learning-Based Rainfall Data Imputation and Prediction System  
 **Author:** Arinn Danish  
 **Date:** July 2026  
-**Notebooks:** `03_tcn_prediction_tensorflow.ipynb` (basic), `03b_tcn_multihead_tensorflow.ipynb` (enhanced)  
+**Notebooks:** `03_tcn_prediction_tensorflow.ipynb` (basic), `03b_prediction_pipeline_phases3to7.ipynb` (full pipeline — Phases 3–7)  
 **Framework:** TensorFlow 2.21.0 / Keras 3.15.0
 
 ---
@@ -530,7 +530,7 @@ The multi-head TCN sits at the **upper end of what is achievable with rainfall-o
 | `tcn_mh_scatter_weekly.png` | Actual vs predicted scatter — 7-day cumulative (3 stations) |
 | `tcn_mh_scatter_monthly.png` | Actual vs predicted scatter — 30-day cumulative (3 stations) |
 | `tcn_r2_comparison.png` | R²% bar chart — all 4 model variants side by side |
-| `03b_tcn_multihead_tensorflow.ipynb` | Full documented notebook — multi-head, hurdle, ERA5 |
+| `03b_prediction_pipeline_phases3to7.ipynb` | Full pipeline notebook — multi-head, hurdle, ERA5, Phase 5–7 |
 | `03_tcn_prediction_tensorflow.ipynb` | Basic TCN notebook — 14-day horizon |
 | `hurdle_tcn_predictions.csv` | 893 rows — hurdle model (no ERA5) test predictions |
 | `era5_hurdle_predictions.csv` | 893 rows — ERA5+hurdle model test predictions |
