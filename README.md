@@ -14,7 +14,8 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 
 | Phase | Notebook | Method | Key Result |
 |---|---|---|---|
-| 1 — Data Engineering | `01_e2e_data_engineering.ipynb` | EDA, gap detection, feature engineering | Clean dataset, gap map |
+| 1 — Data Engineering (Pahang) | `01_e2e_data_engineering.ipynb` | EDA, gap detection, feature engineering | Clean dataset, gap map |
+| 1b — Data Engineering (Multi-River) | `01b_data_engineering_multiriver.ipynb` | Excel 15-min → daily QC, ERA5 mapping, IMERG, climate indices | 53 stations, 4 rivers |
 | 2 — GAN Imputation | `02b_gan_cnn_tensorflow.ipynb` | GAIN (GAN) with CNN generator, 5-seed ensemble | R²=+0.179, mean bias <2% |
 | 3–7 — Prediction Pipeline | `03b_prediction_pipeline_phases3to7.ipynb` | Multi-head Hurdle TCN · XGBoost Hurdle · Ridge · TCN+Ridge · Ridge+IMERG+CI | Monthly R²=80.7% (Kuantan, Phase 6–7) |
 
@@ -55,7 +56,8 @@ End-to-end deep learning pipeline covering data engineering, GAN-based gap imput
 
 ```
 ├── notebooks/
-│   ├── 01_e2e_data_engineering.ipynb
+│   ├── 01_e2e_data_engineering.ipynb       # Pahang 3-station data engineering
+│   ├── 01b_data_engineering_multiriver.ipynb  # Multi-river full pipeline (Phases 4–7)
 │   ├── 02b_gan_cnn_tensorflow.ipynb
 │   ├── 03b_prediction_pipeline_phases3to7.ipynb
 │   └── archive/          # superseded notebook versions
