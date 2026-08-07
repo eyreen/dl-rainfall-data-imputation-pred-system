@@ -1,0 +1,29 @@
+{
+  "pasir_kemudi": {
+    "r2_monthly_logscale_raw": -0.025021076202392578,
+    "r2_monthly_logscale_cal": -0.3234759575012116,
+    "r2_monthly_mm_raw": -0.3255873918533325,
+    "r2_monthly_mm_cal": -0.09113704264614442,
+    "r_monthly": -0.033679768563051445,
+    "rmse_mm": 136.5997877680705,
+    "n_test_months": 26
+  },
+  "sg_belat": {
+    "r2_monthly_logscale_raw": -0.4633469581604004,
+    "r2_monthly_logscale_cal": -0.42408953307701935,
+    "r2_monthly_mm_raw": -0.5250816345214844,
+    "r2_monthly_mm_cal": -0.16354755295190015,
+    "r_monthly": -0.4082921874122584,
+    "rmse_mm": 167.39071548665368,
+    "n_test_months": 26
+  },
+  "sg_cherating": {
+    "r2_monthly_logscale_raw": -0.18935632705688477,
+    "r2_monthly_logscale_cal": -1.3575072587614563,
+    "r2_monthly_mm_raw": -0.38136613368988037,
+    "r2_monthly_mm_cal": -3.213762598272681,
+    "r_monthly": 0.11461306119511061,
+    "rmse_mm": 420.16890976391505,
+    "n_test_months": 26
+  }
+}

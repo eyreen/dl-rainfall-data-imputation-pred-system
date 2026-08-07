@@ -1,0 +1,23 @@
+{
+  "pasir_kemudi": {
+    "r2_monthly_log": -0.02132117748260498,
+    "r2_monthly_mm": -0.18822646141052246,
+    "r_monthly": 0.32000753454482067,
+    "rmse_mm": 142.50160217285156,
+    "n_test_months": 26
+  },
+  "sg_belat": {
+    "r2_monthly_log": -0.18988335132598877,
+    "r2_monthly_mm": -0.20703518390655518,
+    "r_monthly": 0.22139186015343781,
+    "rmse_mm": 171.00148010253906,
+    "n_test_months": 26
+  },
+  "sg_cherating": {
+    "r2_monthly_log": 0.21637576818466187,
+    "r2_monthly_mm": 0.09496057033538818,
+    "r_monthly": 0.3790483550156296,
+    "rmse_mm": 197.0031280517578,
+    "n_test_months": 26
+  }
+}
