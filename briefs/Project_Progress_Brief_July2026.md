@@ -241,6 +241,7 @@ We downloaded the Pahang region bounding box (2009–2025) and extracted 9 daily
 | 5 | Bayesian hyperparameter search (Optuna) | **Done** | Weekly +11.3%, Monthly +26.6% (new bests) |
 | 5b | Phase 5 dual-grid ERA5 + log₁p features | **Done** | sg_cherating monthly: 72.2% → **81.7% ✓** |
 | 5c | Phase 6 multi-river extension (53 stations) | **Done** | Klang best: 62.8% (TCN+Ridge); Kedah: 51.9%; Johor: 34.0% |
+| 5d | East Malaysia expansion — Padas (Sabah) + Sarawak (96 stations total) | **Done** | Sarawak best: 73.1% (sibu_laut), median 33.1%; Padas data too sparse (best 9.0%) |
 | 6 | Wavelet feature decomposition | Optional | Est. +4–9% |
 | 7 | Daily/weekly prediction for new rivers | Optional | XGBoost Hurdle (same as Phase 4 approach) |
 | 8 | Higher-resolution precipitation (IMERG 0.1°) | Optional | +5–10pp monthly for inland stations |
@@ -351,6 +352,7 @@ The deep learning architecture stays exactly the same — only the number of sta
 | Phase 4 monthly model (direct ERA5-aggregate prediction) | **Complete** — sg_cherating monthly R²=72.2% (r=0.918) |
 | **Phase 5 monthly model (TCN architecture + improved pipeline)** | **Complete** — **sg_cherating R²=81.7% ✓ exceeds 80% target** |
 | **Phase 6 multi-river extension (Johor · Kedah · Klang + Kuantan)** | **Complete** — **53 stations; Klang best R²=62.8%; Kuantan target maintained 80.7%** |
+| **East Malaysia expansion (Padas + Sarawak — 96 stations total)** | **Complete** — **diff-based reprocessing; IMERG-only model (no ERA5); Sarawak best 73.1%, median 33.1%; Padas best 9.0% (sparse data)** |
 
 ---
 
@@ -594,6 +596,80 @@ For each station, the higher R² across all Phase 6 and Phase 7 models is retain
 
 ---
 
+## §9e. East Malaysia Expansion — Padas (Sabah) & Sarawak (August 2026)
+
+The pipeline has been extended to cover **all 96 stations** across 6 river systems, adding Sg. Padas (Sabah, 3 stations) and Sg. Sarawak (Sarawak, 40 stations) to the existing 53 peninsular stations.
+
+### Key engineering finding — cumulative counter format
+
+Padas and Sarawak use a **tipping-bucket cumulative counter** recording format, unlike the 4 peninsular rivers which log incremental 15-minute rainfall. The difference was identified by inspecting raw values:
+
+| River | Format | Typical raw value between events | Aggregation method |
+|---|---|---|---|
+| Johor / Kedah / Klang / Kuantan | Incremental — each 15-min slot is the rain for that slot | 0.0 mm (dry) | Direct sum |
+| Padas / Sarawak | Cumulative counter — value accumulates and rarely resets to 0 | 80–300 mm (running total) | `diff()` of consecutive readings |
+
+Direct summation of cumulative readings produced physically impossible values (7,000–24,000+ mm/day). The correct approach:
+
+```python
+# Sum positive increments; reject spikes > 50 mm/15-min (= 200 mm/hr = sensor error threshold)
+diffs = series.diff()
+valid = diffs[(diffs > 0) & (diffs <= 50.0)]
+daily_total = valid.sum()
+```
+
+This correctly recovers rainfall from the counter increments while discarding counter-overflow artefacts.
+
+### ERA5 unavailability for East Malaysia
+
+The ERA5 NetCDF files in this project cover only the Pahang bounding box (Peninsular Malaysia). Padas (Sabah, ~5°N/116°E) and Sarawak (~1.5°N/110°E) lie outside this domain. Rather than downloading additional ERA5 tiles, the model falls back to the IMERG + climate indices feature set (same 15-feature count as Phase 6 but replacing ERA5 with IMERG):
+
+| Group | Features | Count |
+|---|---|---|
+| IMERG satellite precipitation | log_imerg, log_imerg_3x3 | 2 |
+| Seasonal harmonics | sin_m, cos_m, sin_2m, cos_2m | 4 |
+| Climate indices | oni, dmi, oni_lag3m, oni_lag6m, dmi_lag3m | 5 |
+| Lag features | lag1, log_lag1, lag2, log_lag2 | 4 |
+| **Total** | | **15** |
+
+IMERG's global 0.1° coverage was re-extracted for all 96 stations (updated `imerg_stations_monthly.csv`).
+
+### Data quality
+
+| River | Stations | Date range | NaN rate | Notes |
+|---|---|---|---|---|
+| Padas | 3 | May 2015 – Jun 2026 | 40–54% | Cumulative counter; 3 stations only |
+| Sarawak | 40 | May 2015 – Jun 2026 | 53–79% | Cumulative counter; ulu_maong skipped (only 2 test months) |
+
+High NaN rates arise because months with fewer than 15 valid daily readings are excluded from monthly totals.
+
+### Model results (RidgeCV, IMERG+climate, test: May 2024 – Sep 2025)
+
+| River | Stations evaluated | Best R² | Best station | Median R² | Positive R² | ≥50% R² |
+|---|---|---|---|---|---|---|
+| **Sarawak** | 39 | **73.1%** | sibu_laut | **33.1%** | 37 / 39 | 9 / 39 |
+| Padas | 3 | 9.0% | sg_pegalan | −16.8% | 1 / 3 | 0 / 3 |
+
+**Sarawak:** Strong performance for a region with no ERA5 data — IMERG + ONI/DMI climate indices capture the equatorial and Indian Ocean-influenced rainfall variability in Sarawak. 37 of 39 stations show positive R², with 9 stations above 50%.
+
+**Padas:** Results are marginal. Only 3 stations with 40–54% NaN rates leave too little training signal for meaningful prediction. The best result (sg_pegalan, 9.0%) is noted but should be interpreted with caution. The primary value of the Padas dataset in this project is coverage completeness, not predictive performance.
+
+### New deliverables (East Malaysia)
+
+| File | Description |
+|---|---|
+| `data/processed/padas_daily_raw.csv` | 3-station Padas daily rainfall (diff-based), 4,050 rows |
+| `data/processed/sarawak_daily_raw.csv` | 40-station Sarawak daily rainfall (diff-based), 4,050 rows |
+| `data/processed/padas_daily_imputed.csv` | Padas with `_imputed=0` flag (no GAN fill — all real observations) |
+| `data/processed/sarawak_daily_imputed.csv` | Sarawak with `_imputed=0` flag (no GAN fill) |
+| `data/processed/imerg_stations_monthly.csv` | Re-extracted for all 96 stations (129 months × 193 cols) |
+| `data/processed/all_rivers_station_meta.json` | Updated to 96 stations (was 91 — Kuantan was missing; fixed) |
+| `predictions/phase7_ridge_padas_sarawak_results.json` | Per-station Ridge results for 42 East Malaysian stations |
+| `predictions/phase7_ridge_padas_sarawak_summary.csv` | Summary CSV: river, station, r2, r, rmse, n_train, n_test |
+| `notebooks/01b_data_engineering_multiriver.ipynb` | Updated to 6-river, 96-station data engineering notebook |
+
+---
+
 ## 10. Deliverables Produced So Far
 
 | File | Description |
@@ -617,10 +693,15 @@ For each station, the higher R² across all Phase 6 and Phase 7 models is retain
 | `predictions/phase6_tcn_ridge_hybrid_results.json` | **Phase 6 TCN+Ridge hybrid — all 4 rivers, 53 stations** |
 | `predictions/phase6_best_results.json` | **Phase 6 best-of — max R² per station (Ridge + TCN+Ridge)** |
 | `predictions/phase6_best_predictions.csv` | **Phase 6 best-of monthly predictions — all positive-R² stations** |
-| `data/processed/imerg_stations_monthly.csv` | **Phase 7 — IMERG V07B monthly precipitation per station, 2015–2025, 129 months** |
+| `data/processed/imerg_stations_monthly.csv` | **Phase 7 / East Malaysia — IMERG V07B monthly precipitation, all 96 stations, 129 months** |
 | `data/processed/climate_indices_monthly.csv` | **Phase 7 — ONI + DMI monthly means and lags, 2015–2026** |
 | `predictions/phase7_ridge_enhanced_results.json` | **Phase 7 — Ridge+IMERG+CI per-station results (17 test months)** |
 | `predictions/phase7_final_best_results.json` | **Phase 7 final best-of — max R² across Phase 6+7 (definitive deliverable)** |
+| `data/processed/padas_daily_raw.csv` | **East Malaysia — Padas 3-station daily rainfall (diff-based), 4,050 rows** |
+| `data/processed/sarawak_daily_raw.csv` | **East Malaysia — Sarawak 40-station daily rainfall (diff-based), 4,050 rows** |
+| `predictions/phase7_ridge_padas_sarawak_results.json` | **East Malaysia — IMERG+climate Ridge results for 42 stations (Padas + Sarawak)** |
+| `predictions/phase7_ridge_padas_sarawak_summary.csv` | **East Malaysia — per-station R², r, RMSE summary CSV** |
+| `notebooks/01b_data_engineering_multiriver.ipynb` | **Updated — 96 stations, 6 rivers (was 53 stations)** |
 | `figures/tcn/` | Scatter plots, SHAP importance, R² comparison charts |
 | `reports/Technical_Report_Master_Progress.md` | Master technical report — all phases with equations and glossary |
 | `notebooks/03b_prediction_pipeline_phases3to7.ipynb` | Reproducible code notebook — multi-head, hurdle, ERA5, Phase 5 dual-grid, Phase 6+7 multi-river (53 stations) |
@@ -633,4 +714,4 @@ For each station, the higher R² across all Phase 6 and Phase 7 models is retain
 | Climate teleconnection indices (ONI/DMI) | **Done — Phase 7** | ✓ Completed |
 | Daily/weekly prediction for Johor/Kedah/Klang | +5–15pp daily R² | Not started — XGBoost Hurdle per-river |
 | Sensor data recovery (Felda Panching, KOMTUR) | Enables evaluation for 2 more Kuantan stations | Requires YBTM sensor repair |
-| Padas (Sabah) and Sarawak rivers | New river systems | ERA5 coordinate extraction required first |
+| Padas (Sabah) and Sarawak rivers | **Done — Phase 7/East Malaysia** | ✓ Completed — see §9e |

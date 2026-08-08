@@ -215,3 +215,38 @@ The notebook includes three key visualizations:
 | `missing_data_heatmap.png` | Missing value visualization |
 | `feature_correlation_matrix.png` | Feature correlation heatmap |
 | `rainfall_timeseries.png` | Monthly rainfall overview |
+
+---
+
+## 9. Multi-River Extension — Appendix (Phase 6 / East Malaysia)
+
+The multi-river notebook `notebooks/01b_data_engineering_multiriver.ipynb` extends this Phase 1 pipeline to all 96 stations across 6 rivers. One key finding emerged during East Malaysia (Padas and Sarawak) processing:
+
+### 9.1 Cumulative Counter vs. Incremental Format
+
+JPS raw Excel files from Sabah (Padas) and Sarawak use a **cumulative tipping-bucket counter** format rather than the incremental format used by the 4 peninsular rivers:
+
+| Format | Raw 15-min value example | Aggregation |
+|---|---|---|
+| **Incremental** (Peninsular) | `0, 0, 0, 2.4, 0, 0, 0` — each slot is that interval's rainfall | `sum()` of slots within the day |
+| **Cumulative** (Padas / Sarawak) | `81.0, 81.0, 81.0, 81.2, 81.4` — running total that rarely resets | `diff()` of consecutive slots, then `sum(positive diffs ≤ 50 mm)` |
+
+Applying a direct sum to cumulative readings produces values of 7,000–24,000 mm/day (physically impossible). The correct aggregation uses positive first-differences with a 50 mm/15-min cap to reject counter-overflow spikes:
+
+```python
+MAX_15MIN = 50.0            # mm per 15-min slot; >50 mm = sensor spike
+diffs = series.diff()
+valid = diffs[(diffs > 0) & (diffs <= MAX_15MIN)]
+daily_total = float(valid.sum())
+```
+
+The 50 mm/15-min threshold corresponds to 200 mm/hr — at the extreme physical limit of tropical convective rainfall. Any single-step increment above this is a sensor counter-overflow artefact and is discarded.
+
+### 9.2 Multi-River Data Outputs
+
+| File | Description |
+|---|---|
+| `data/processed/padas_daily_raw.csv` | Padas — 3-station daily rainfall (diff-based), 4,050 rows |
+| `data/processed/sarawak_daily_raw.csv` | Sarawak — 40-station daily rainfall (diff-based), 4,050 rows |
+| `data/processed/all_rivers_station_meta.json` | Station metadata for all 96 stations (river, slug, name, lat, lon) |
+| `notebooks/01b_data_engineering_multiriver.ipynb` | Full 6-river, 96-station data engineering notebook |
