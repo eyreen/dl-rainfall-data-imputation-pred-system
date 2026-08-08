@@ -382,5 +382,349 @@
     "lon": 101.63134,
     "col_idx": 37,
     "river": "klang"
+  },
+  {
+    "river": "padas",
+    "slug": "padas_sg_padas_di_beaufort_jps",
+    "name": "Sg. Padas di Beaufort JPS",
+    "lat": 5.3532,
+    "lon": 115.7269,
+    "col_idx": 1
+  },
+  {
+    "river": "padas",
+    "slug": "padas_sg_sook_di_biah",
+    "name": "Sg. Sook di Biah",
+    "lat": 5.25686,
+    "lon": 116.14258,
+    "col_idx": 3
+  },
+  {
+    "river": "padas",
+    "slug": "padas_sg_pegalan_di_keranaan",
+    "name": "Sg. Pegalan di Keranaan",
+    "lat": 5.684722,
+    "lon": 116.378889,
+    "col_idx": 5
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_aman_5_bridge",
+    "name": "Aman 5 Bridge",
+    "lat": 1.181909,
+    "lon": 110.259851,
+    "col_idx": 1
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_bako_causeway",
+    "name": "Bako Causeway",
+    "lat": 1.5995,
+    "lon": 110.401944,
+    "col_idx": 3
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_barrage",
+    "name": "Barrage",
+    "lat": 1.576058,
+    "lon": 110.409309,
+    "col_idx": 5
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_batu_kawa_bridge",
+    "name": "Batu Kawa Bridge",
+    "lat": 1.508666,
+    "lon": 110.270305,
+    "col_idx": 7
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_batu_kitang_telemetry",
+    "name": "Batu Kitang Telemetry",
+    "lat": 1.452416,
+    "lon": 110.282277,
+    "col_idx": 9
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_bau",
+    "name": "Bau",
+    "lat": 1.417666,
+    "lon": 110.153166,
+    "col_idx": 11
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_bau_bridge",
+    "name": "Bau Bridge",
+    "lat": 1.423944,
+    "lon": 110.150028,
+    "col_idx": 13
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_buan_bidi",
+    "name": "Buan Bidi",
+    "lat": 1.397444,
+    "lon": 110.116416,
+    "col_idx": 15
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_buntal_did",
+    "name": "Buntal DID",
+    "lat": 1.701277,
+    "lon": 110.365194,
+    "col_idx": 17
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kampung_git",
+    "name": "Kampung Git",
+    "lat": 1.355556,
+    "lon": 110.26675,
+    "col_idx": 19
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kampung_monggak",
+    "name": "Kampung Monggak",
+    "lat": 1.327138,
+    "lon": 110.108166,
+    "col_idx": 21
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kampung_opar",
+    "name": "Kampung Opar",
+    "lat": 1.439638,
+    "lon": 110.07125,
+    "col_idx": 23
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kampung_rayu",
+    "name": "Kampung Rayu",
+    "lat": 1.61275,
+    "lon": 110.151944,
+    "col_idx": 25
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kampung_sagah",
+    "name": "Kampung Sagah",
+    "lat": 1.532194,
+    "lon": 110.211194,
+    "col_idx": 27
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kampung_similang",
+    "name": "Kampung Similang",
+    "lat": 1.608166,
+    "lon": 110.501111,
+    "col_idx": 29
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kuching_airport",
+    "name": "Kuching Airport",
+    "lat": 1.490444,
+    "lon": 110.352555,
+    "col_idx": 31
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kuching_city_south",
+    "name": "Kuching City South",
+    "lat": 1.552472,
+    "lon": 110.359583,
+    "col_idx": 33
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_kuching_saberkas",
+    "name": "Kuching Saberkas",
+    "lat": 1.537027,
+    "lon": 110.340305,
+    "col_idx": 35
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_malihah",
+    "name": "Malihah",
+    "lat": 1.551944,
+    "lon": 110.238944,
+    "col_idx": 37
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_maong_tengah_kiri",
+    "name": "Maong Tengah Kiri",
+    "lat": 1.533361,
+    "lon": 110.320833,
+    "col_idx": 39
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_matang",
+    "name": "Matang",
+    "lat": 1.578489,
+    "lon": 110.214019,
+    "col_idx": 41
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_padawan",
+    "name": "Padawan",
+    "lat": 1.163333,
+    "lon": 110.255167,
+    "col_idx": 43
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_padungan",
+    "name": "Padungan",
+    "lat": 1.555027,
+    "lon": 110.365833,
+    "col_idx": 45
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_pang_tebang",
+    "name": "Pang Tebang",
+    "lat": 1.270916,
+    "lon": 110.086666,
+    "col_idx": 47
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_rampangi",
+    "name": "Rampangi",
+    "lat": 1.678111,
+    "lon": 110.337111,
+    "col_idx": 49
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_satok_b",
+    "name": "Satok B",
+    "lat": 1.559666,
+    "lon": 110.324472,
+    "col_idx": 51
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_sebubut",
+    "name": "Sebubut",
+    "lat": 1.579861,
+    "lon": 110.22125,
+    "col_idx": 53
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_semariang_fisheries",
+    "name": "Semariang Fisheries",
+    "lat": 1.605917,
+    "lon": 110.324194,
+    "col_idx": 55
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_semban",
+    "name": "Semban",
+    "lat": 1.231056,
+    "lon": 110.182806,
+    "col_idx": 57
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_sibu_laut",
+    "name": "Sibu Laut",
+    "lat": 1.676861,
+    "lon": 110.203777,
+    "col_idx": 59
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_siniawan",
+    "name": "Siniawan",
+    "lat": 1.447194,
+    "lon": 110.231556,
+    "col_idx": 61
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_siol_jps",
+    "name": "Siol JPS",
+    "lat": 1.603389,
+    "lon": 110.352444,
+    "col_idx": 63
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_sungai_china",
+    "name": "Sungai China",
+    "lat": 1.612555,
+    "lon": 110.196666,
+    "col_idx": 65
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_sungai_opar",
+    "name": "Sungai Opar",
+    "lat": 1.442305,
+    "lon": 110.071833,
+    "col_idx": 67
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_sungai_pedid",
+    "name": "Sungai Pedid",
+    "lat": 1.296889,
+    "lon": 110.08525,
+    "col_idx": 69
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_sungai_tengah",
+    "name": "Sungai Tengah",
+    "lat": 1.55975,
+    "lon": 110.216944,
+    "col_idx": 71
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_telok_assam",
+    "name": "Telok Assam",
+    "lat": 1.717091,
+    "lon": 110.444988,
+    "col_idx": 73
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_ulu_maong",
+    "name": "Ulu Maong",
+    "lat": 1.518418,
+    "lon": 110.341862,
+    "col_idx": 75
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_upper_sungai_staat",
+    "name": "Upper Sungai Staat",
+    "lat": 1.378055,
+    "lon": 110.202555,
+    "col_idx": 77
+  },
+  {
+    "river": "sarawak",
+    "slug": "sarawak_mid_sungai_kuap",
+    "name": "Mid Sungai Kuap",
+    "lat": 1.498138,
+    "lon": 110.396972,
+    "col_idx": 79
   }
 ]
