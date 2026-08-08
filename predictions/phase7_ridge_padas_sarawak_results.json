@@ -1,0 +1,446 @@
+{
+  "description": "Padas & Sarawak Ridge \u2014 IMERG + seasonal + climate + lags (no ERA5 \u2014 East Malaysia)",
+  "features": [
+    "log_imerg",
+    "log_imerg_3x3",
+    "sin_m",
+    "cos_m",
+    "sin_2m",
+    "cos_2m",
+    "oni",
+    "dmi",
+    "oni_lag3m",
+    "oni_lag6m",
+    "dmi_lag3m",
+    "lag1",
+    "log_lag1",
+    "lag2",
+    "log_lag2"
+  ],
+  "n_features": 15,
+  "train_period": "2015-01 to 2024-04",
+  "test_period": "2024-05 to 2025-09",
+  "note": "ERA5 not available for Sabah/Sarawak; IMERG used as primary precipitation feature",
+  "stations": [
+    {
+      "river": "padas",
+      "station": "padas_sg_padas_di_beaufort_jps",
+      "r2": -0.2508,
+      "r": 0.3771,
+      "rmse": 129.1,
+      "n_train": 55,
+      "n_test": 16,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "padas",
+      "station": "padas_sg_sook_di_biah",
+      "r2": -1.3785,
+      "r": 0.1962,
+      "rmse": 150.8,
+      "n_train": 39,
+      "n_test": 15,
+      "best_alpha": 5.0
+    },
+    {
+      "river": "padas",
+      "station": "padas_sg_pegalan_di_keranaan",
+      "r2": 0.0903,
+      "r": 0.4513,
+      "rmse": 58.3,
+      "n_train": 55,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_aman_5_bridge",
+      "r2": 0.1512,
+      "r": 0.5563,
+      "rmse": 145.6,
+      "n_train": 32,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_bako_causeway",
+      "r2": 0.2731,
+      "r": 0.6025,
+      "rmse": 203.1,
+      "n_train": 32,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_barrage",
+      "r2": 0.2856,
+      "r": 0.754,
+      "rmse": 175.3,
+      "n_train": 43,
+      "n_test": 17,
+      "best_alpha": 100.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_batu_kawa_bridge",
+      "r2": 0.5242,
+      "r": 0.8358,
+      "rmse": 107.9,
+      "n_train": 43,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_batu_kitang_telemetry",
+      "r2": 0.3757,
+      "r": 0.8505,
+      "rmse": 138.6,
+      "n_train": 43,
+      "n_test": 17,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_bau",
+      "r2": 0.4752,
+      "r": 0.8046,
+      "rmse": 137.8,
+      "n_train": 36,
+      "n_test": 16,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_bau_bridge",
+      "r2": 0.0661,
+      "r": 0.8023,
+      "rmse": 162.0,
+      "n_train": 41,
+      "n_test": 17,
+      "best_alpha": 100.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_buan_bidi",
+      "r2": 0.2968,
+      "r": 0.8827,
+      "rmse": 160.0,
+      "n_train": 25,
+      "n_test": 17,
+      "best_alpha": 5.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_buntal_did",
+      "r2": 0.6565,
+      "r": 0.9103,
+      "rmse": 143.5,
+      "n_train": 38,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kampung_git",
+      "r2": -0.3232,
+      "r": 0.7376,
+      "rmse": 191.1,
+      "n_train": 22,
+      "n_test": 17,
+      "best_alpha": 500.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kampung_monggak",
+      "r2": 0.3502,
+      "r": 0.7675,
+      "rmse": 170.5,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kampung_opar",
+      "r2": 0.152,
+      "r": 0.7827,
+      "rmse": 162.1,
+      "n_train": 40,
+      "n_test": 17,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kampung_rayu",
+      "r2": 0.1446,
+      "r": 0.844,
+      "rmse": 283.6,
+      "n_train": 25,
+      "n_test": 16,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kampung_sagah",
+      "r2": 0.5275,
+      "r": 0.8499,
+      "rmse": 103.2,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kampung_similang",
+      "r2": 0.2517,
+      "r": 0.731,
+      "rmse": 185.4,
+      "n_train": 23,
+      "n_test": 17,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kuching_airport",
+      "r2": 0.2648,
+      "r": 0.7663,
+      "rmse": 149.3,
+      "n_train": 26,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kuching_city_south",
+      "r2": 0.1228,
+      "r": 0.6885,
+      "rmse": 192.0,
+      "n_train": 37,
+      "n_test": 17,
+      "best_alpha": 100.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_kuching_saberkas",
+      "r2": 0.4879,
+      "r": 0.7401,
+      "rmse": 116.4,
+      "n_train": 34,
+      "n_test": 17,
+      "best_alpha": 0.1
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_malihah",
+      "r2": 0.5185,
+      "r": 0.8134,
+      "rmse": 136.4,
+      "n_train": 32,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_maong_tengah_kiri",
+      "r2": 0.1619,
+      "r": 0.6957,
+      "rmse": 181.8,
+      "n_train": 32,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_matang",
+      "r2": 0.6856,
+      "r": 0.9111,
+      "rmse": 132.8,
+      "n_train": 23,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_padawan",
+      "r2": 0.1081,
+      "r": 0.6109,
+      "rmse": 135.9,
+      "n_train": 25,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_padungan",
+      "r2": 0.2162,
+      "r": 0.7456,
+      "rmse": 175.6,
+      "n_train": 32,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_pang_tebang",
+      "r2": 0.1473,
+      "r": 0.7057,
+      "rmse": 231.6,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_rampangi",
+      "r2": 0.3446,
+      "r": 0.902,
+      "rmse": 181.6,
+      "n_train": 22,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_satok_b",
+      "r2": 0.5337,
+      "r": 0.7741,
+      "rmse": 123.7,
+      "n_train": 31,
+      "n_test": 17,
+      "best_alpha": 1.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_sebubut",
+      "r2": 0.5479,
+      "r": 0.8924,
+      "rmse": 122.7,
+      "n_train": 34,
+      "n_test": 17,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_semariang_fisheries",
+      "r2": 0.4261,
+      "r": 0.8367,
+      "rmse": 179.0,
+      "n_train": 14,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_semban",
+      "r2": 0.1344,
+      "r": 0.653,
+      "rmse": 158.7,
+      "n_train": 28,
+      "n_test": 15,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_sibu_laut",
+      "r2": 0.7313,
+      "r": 0.8657,
+      "rmse": 109.8,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_siniawan",
+      "r2": 0.4815,
+      "r": 0.8132,
+      "rmse": 107.8,
+      "n_train": 28,
+      "n_test": 17,
+      "best_alpha": 10.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_siol_jps",
+      "r2": 0.3338,
+      "r": 0.723,
+      "rmse": 215.5,
+      "n_train": 41,
+      "n_test": 17,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_sungai_china",
+      "r2": 0.3254,
+      "r": 0.847,
+      "rmse": 252.3,
+      "n_train": 23,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_sungai_opar",
+      "r2": 0.3426,
+      "r": 0.793,
+      "rmse": 145.4,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_sungai_pedid",
+      "r2": 0.0376,
+      "r": 0.6843,
+      "rmse": 198.1,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_sungai_tengah",
+      "r2": 0.3618,
+      "r": 0.8587,
+      "rmse": 152.0,
+      "n_train": 24,
+      "n_test": 17,
+      "best_alpha": 20.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_telok_assam",
+      "r2": 0.5728,
+      "r": 0.8287,
+      "rmse": 150.6,
+      "n_train": 35,
+      "n_test": 17,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_upper_sungai_staat",
+      "r2": -0.1781,
+      "r": 0.6043,
+      "rmse": 87.3,
+      "n_train": 28,
+      "n_test": 3,
+      "best_alpha": 50.0
+    },
+    {
+      "river": "sarawak",
+      "station": "sarawak_mid_sungai_kuap",
+      "r2": 0.3306,
+      "r": 0.7395,
+      "rmse": 136.5,
+      "n_train": 33,
+      "n_test": 17,
+      "best_alpha": 2.0
+    }
+  ]
+}

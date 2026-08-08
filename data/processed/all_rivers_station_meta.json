@@ -726,5 +726,45 @@
     "lat": 1.498138,
     "lon": 110.396972,
     "col_idx": 79
+  },
+  {
+    "river": "kuantan",
+    "slug": "kuantan_sg_kuantan_di_pasir_kemudi",
+    "name": "Sg. Kuantan di Pasir Kemudi",
+    "lat": 3.872575,
+    "lon": 103.191397,
+    "col_idx": 1
+  },
+  {
+    "river": "kuantan",
+    "slug": "kuantan_felda_panching_utara",
+    "name": "Felda Panching Utara",
+    "lat": 3.835556,
+    "lon": 103.160556,
+    "col_idx": 3
+  },
+  {
+    "river": "kuantan",
+    "slug": "kuantan_komtur",
+    "name": "KOMTUR",
+    "lat": 3.829761,
+    "lon": 103.29,
+    "col_idx": 5
+  },
+  {
+    "river": "kuantan",
+    "slug": "kuantan_sg_belat_di_sri_damai",
+    "name": "Sg. Belat di Sri Damai",
+    "lat": 3.76195,
+    "lon": 103.236091,
+    "col_idx": 7
+  },
+  {
+    "river": "kuantan",
+    "slug": "kuantan_sg_cherating_di_cherating",
+    "name": "Sg. Cherating di Cherating",
+    "lat": 4.130339,
+    "lon": 103.393675,
+    "col_idx": 9
   }
 ]
